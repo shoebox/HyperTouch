@@ -1,0 +1,14 @@
+-main ApplicationMain
+-D nme_install_tool
+-cp src
+-cp ../inthebox/src/
+-lib actuate
+-lib nme
+-D iphone
+-swf-version 10.1
+-swf9 Export/flash/bin/gnarks.swf
+-swf-header 760:640:60:FFFFFF
+-cp Export/flash/haxe
+--no-inline
+-debug
+--connect 6000
