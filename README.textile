@@ -26,6 +26,7 @@ var hyp = HyperTouch.getInstance( );
 </code></pre>
 
 h2. TODO:
+
 I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is welcome.
 
 - Long Press
