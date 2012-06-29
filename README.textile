@@ -34,7 +34,19 @@ I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is wel
 - Maybe pressures... support on Android
 ( ... )
 
-h3. Misc
+h2. Misc
+
+Tested on Devices :
+
+Android:
+- Nexus One 2.3.6
+- Motorola Xoom 4.0.3
+- Galaxy Nexus 4.0
+
+iOS:
+- iPad 1 & 2
+- iPod 2G
+- iPhone 4G
 
 * Twitter http://twitter.com/shoe_box
 * Made at Hyperfiction ( www.hyperfiction.fr )
