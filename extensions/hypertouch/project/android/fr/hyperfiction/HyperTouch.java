@@ -151,7 +151,7 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 		}
 
 		/**
-		* Listener of the Scale Gesture
+		* Listener of the <code>GestureDetector</code> scale Gesture
 		* 
 		* @public
 		* @param	scl : Pinch value ( Float )
@@ -169,7 +169,7 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 		}
 
 		/**
-		* Listener of the DoubleTap Gesture
+		* Listener of the <code>GestureDetector</code> double tap Gesture
 		* 
 		* @public
 		* @param	e : Gesture ( MotionEvent )
@@ -197,19 +197,19 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
  		} 
 
  		/**
-		* Listener of the Tap Gesture
+		* Listener of the <code>GestureDetector</code> tap Gesture
 		* 
 		* @public
 		* @param	e : Gesture ( MotionEvent )
 		* @return	false
 		*/
 		public boolean onSingleTapUp ( MotionEvent ev ) {
-			Log.i( TAG , "onSingleTapUp : "+ev.toString() + " - "+ ev.getPointerCount( ) );
+			//Log.i( TAG , "onSingleTapUp : "+ev.toString() + " - "+ ev.getPointerCount( ) );
 			return false;
 		}
 
 		/**
-		* Listener of the Tap Gesture
+		* Listener of the <code>GestureDetector</code> confirmed tap gesture
 		* 
 		* @public
 		* @param	e : Gesture ( MotionEvent )
@@ -237,6 +237,7 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 
 		/* 
 		* 
+		*
 		* @public
 		* @return	void
 		*/
@@ -245,20 +246,24 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 		}  
 		
 		/**
-		* 
+		* Long Press Listener
 		* 
 		* @public
-		* @return	void
+		* @param	e : Gesture ( MotionEvent )
+		* @return	false
 		*/
 		public void onLongPress(MotionEvent ev) {  
 			//Log.i( TAG , "onLongPress : "+ev.toString());  
+			//TODO :
 		}  
 		
 		/**
-		* 
+		* Listener of the <code>GestureDetector</code> scroll Gesture
 		* 
 		* @public
-		* @return	void
+		* @param	e1 : Gesture ( MotionEvent )
+		* @param	e2 : Gesture ( MotionEvent )
+		* @return	false
 		*/
 		public boolean onScroll(MotionEvent e1, MotionEvent e2, final float distanceX, final float distanceY) {  
 			
@@ -289,12 +294,14 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 		public boolean onDown(MotionEvent ev) {  
 			return false;  
 		}  
-		
+
 		/**
-		* 
+		* Listener of the <code>GestureDetector</code> Fling Gesture
 		* 
 		* @public
-		* @return	void
+		* @param	e1 : Gesture ( MotionEvent )
+		* @param	e2 : Gesture ( MotionEvent )
+		* @return	false
 		*/
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {  
 			
@@ -334,9 +341,10 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 	// -------o protected
 	
 		/**
-		* 
+		* Generic Swipe dispatcher
 		* 
 		* @private
+		* @param 	dir : Direction of the Swipe ( Int )
 		* @return	void
 		*/
 		private void _swipe( final int dir ){
@@ -353,16 +361,35 @@ public class HyperTouch extends GestureDetector.SimpleOnGestureListener implemen
 
 	// -------o misc
 
+		/**
+		* Initializer of the HyperTouch Java Class
+		* 
+		* @public
+		* @return	void
+		*/
 		public static void HyperTouch_init( ){
 			Log.i( TAG , "HyperTouch_init ::: ");
-			__instance = new HyperTouch( );
-			__instance.init( );	
+			getInstance( ).init( );
 		}
 
+		/**
+		* Toggle a gesture by its code
+		* 
+		* @public
+		* @param	code : Gesture Code to Toggle ( Int )
+		* @param	b : Gesture ON / OFF ( boolean )
+		* @return	void
+		*/
 		public static void HyperTouch_toggle( int code , boolean b ){
 			getInstance( ).toggleGesture( code , b );
 		}
 
+		/**
+		* Singleton of the HyperTouch Class
+		* 
+		* @public
+		* @return	singleton instance of the Class ( HyperTouch )
+		*/
 		public static HyperTouch getInstance( ){
 
 			if( __instance == null )

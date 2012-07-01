@@ -60,7 +60,7 @@ class HyperTouch extends EventDispatcher{
 	private static var hyp_touch_activate          = Lib.load( "HyperTouch" , "hyp_touch_activate" , 1 );
 	private static var hyp_touch_deactivate        = Lib.load( "HyperTouch" , "hyp_touch_deactivate" , 1 );
 	private static var hyp_touch_get_orientation   = Lib.load( "HyperTouch" , "hyp_touch_get_orientation" , 0 );
-	private static var hypTouch_init             = nme.Loader.load( "hyp_touch_init" , 0 );
+	private static var hypTouch_init = nme.Loader.load( "hyp_touch_init" , 0 );
 	private var _fTmp : FPoint;
 	#end
 
@@ -104,7 +104,7 @@ class HyperTouch extends EventDispatcher{
 
 			#if android
 
-			//Initialize
+			//Initialize JNI Methods
 					
 				if( hyp_touch_init == null )
 					hyp_touch_init = JNI.createStaticMethod( ANDROID_CLASS , 'HyperTouch_init' , "()V" );
@@ -115,11 +115,6 @@ class HyperTouch extends EventDispatcher{
 					
 			#end
 
-			//
-				
-			
-
-			
 		}
 	
 	// -------o public
@@ -168,10 +163,10 @@ class HyperTouch extends EventDispatcher{
 		}
 
 		/**
-		* 
+		* Get the Gesture code by Type 
 		* 
 		* @public
-		* @return	void
+		* @return	gestur code ( Int )
 		*/
 		public function getCode( type : String ) : Int {
 
@@ -252,10 +247,11 @@ class HyperTouch extends EventDispatcher{
 		}		
 
 		/**
-		* Callback of the Tap gesture
+		* Tap Callback
 		* 
 		* @private
-		* @param 	args : Callback arguments coordinates ( Array<Float> )
+		* @param	fx : Location X of the Tap ( Float )
+		* @param	fy : Location Y of the Tap ( Float )
 		* @return	void
 		*/
 		private function _onTapCallback( fx : Float , fy : Float ) : Void{
@@ -269,9 +265,11 @@ class HyperTouch extends EventDispatcher{
 		}
 
 		/**
-		* 
+		* Double Tap Callback
 		* 
 		* @private
+		* @param	fx : Location X of the Tap ( Float )
+		* @param	fy : Location Y of the Tap ( Float )
 		* @return	void
 		*/
 		private function _onTap2Callback( fx : Float , fy : Float ) : Void{
@@ -285,9 +283,11 @@ class HyperTouch extends EventDispatcher{
 		}
 
 		/**
-		* 
+		* Two Fingers Tap Callback
 		* 
 		* @private
+		* @param	fx : Location X of the Tap ( Float )
+		* @param	fy : Location Y of the Tap ( Float )
 		* @return	void
 		*/
 		private function _onTwixCallback( fx : Float , fy : Float ) : Void{
@@ -375,9 +375,11 @@ class HyperTouch extends EventDispatcher{
 		}
 
 		/**
-		* 
+		* Dispatch a gesture & check if there is still listener for this event
+		* If not more listener is registered, the Gesture is disable on the native side.
 		* 
 		* @private
+		* @param	e : Event to be Tested ( Event )
 		* @return	void
 		*/
 		private function _dispatch( e : Event ) : Void{
@@ -450,9 +452,10 @@ class HyperTouch extends EventDispatcher{
 		}
 
 		/**
-		* 
+		* If not more listener is registered, the Gesture is disable on the native side.
 		* 
 		* @private
+		* @param	e : Event to be Tested ( Event )
 		* @return	void
 		*/
 		private function _disable( type : String ) : Void{
