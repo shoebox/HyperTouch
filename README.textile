@@ -2,23 +2,34 @@ h1. HyperTouch:
 
 HyperTouch is a native extension for Haxe / NME to handle native gestures on your Android & iOS devices.
 
+h3. Gestures Currently supported are:
+
+- Tap
+- Double Tap
+- Two Fingers Tap ( iOS only for now )
+- Pinch
+- Rotate ( iOS only for now )
+- Swipe 
+- Pan
+
 h2. Getting started
 
-First include the path to the HyperTouch folder in your NMML project file.
+h3. First include the path to the HyperTouch folder in your NMML project file.
 
-<pre><code><include path="extensions/hypertouch" if="mobile"/></code></pre>
+<pre><code>
+	<include path="extensions/hypertouch" if="mobile"/>
+</code></pre>
 
-Adding listener :
+h3. Adding listeners :
 
 <pre><code>
 var hyp = HyperTouch.getInstance( );
-    hyp.addEventListener( GestureTapEvent.TAP , _onTap , false );
-    hyp.addEventListener( GesturePinchEvent.PINCH , _onPinch , false );
-    hyp.addEventListener( GestureTapEvent.TWO_FINGERS_TAP , _onTwoFingers , false );
-    hyp.addEventListener( GestureTapEvent.DOUBLE_TAP , _onDoubleTap , false );
-    hyp.addEventListener( GestureSwipeEvent.SWIPE , _onSwipe , false );
     hyp.addEventListener( GesturePanEvent.PAN , _onPan , false );
+    hyp.addEventListener( GesturePinchEvent.PINCH , _onPinch , false );
     hyp.addEventListener( GestureSwipeEvent.SWIPE , _onSwipe , false );
+    hyp.addEventListener( GestureTapEvent.DOUBLE_TAP , _onDoubleTap , false );
+    hyp.addEventListener( GestureTapEvent.TAP , _onTap , false );
+    hyp.addEventListener( GestureTapEvent.TWO_FINGERS_TAP , _onTwoFingers , false );
 </code></pre>
 
 h2. TODO:
@@ -27,13 +38,13 @@ I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is wel
 
 - Long Press
 - TwoFingers Tap on Android
-- Velocity on some Gestures
+- Velocity
 - Maybe pressures... support on Android
 ( ... )
 
 h2. Misc
 
-Tested on Devices :
+h3.Tested on Devices :
 
 Android:
 - Nexus One 2.3.6
@@ -45,8 +56,11 @@ iOS:
 - iPod 2G
 - iPhone 4G
 
-* Twitter http://twitter.com/shoe_box
-* Made at Hyperfiction ( www.hyperfiction.fr )
+h3. Twitter 
+http://twitter.com/shoe_box
+
+h3. Made at Hyperfiction 
+( www.hyperfiction.fr )
 
 h2. License
 
@@ -54,20 +68,8 @@ The MIT License
 
 Copyright (c) 2012 Hyperfiction / shoebox
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rightsto use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
