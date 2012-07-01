@@ -16,9 +16,7 @@ h2. Getting started
 
 h3. First include the path to the HyperTouch folder in your NMML project file.
 
-<pre><code>
-	<include path="extensions/hypertouch" if="mobile"/>
-</code></pre>
+<pre><code><include path="extensions/hypertouch" if="mobile"/></code></pre>
 
 h3. Adding listeners :
 
@@ -44,7 +42,7 @@ I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is wel
 
 h2. Misc
 
-h3.Tested on Devices :
+h3. Tested on Devices :
 
 Android:
 - Nexus One 2.3.6
@@ -57,9 +55,11 @@ iOS:
 - iPhone 4G
 
 h3. Twitter 
+
 http://twitter.com/shoe_box
 
 h3. Made at Hyperfiction 
+
 ( www.hyperfiction.fr )
 
 h2. License
