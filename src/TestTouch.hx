@@ -157,9 +157,9 @@ class TestTouch extends Sprite{
 		* @return	void
 		*/
 		private function _onPan( e : GesturePanEvent ) : Void{
-			trace('onPan ::: '+e);
-			_spDemo.x += e.offsetX / 100;
-			_spDemo.y += e.offsetY / 100;
+			trace('onPan ::: '+e.offsetX);
+			_spDemo.x += e.offsetX;
+			_spDemo.y += e.offsetY;
 		}
 
 		/**
@@ -170,8 +170,8 @@ class TestTouch extends Sprite{
 		*/
 		private function _onPinch( e : GesturePinchEvent ) : Void{
 			trace('_onPinch ::: '+e.scale);
-			_spDemo.scaleX += _spDemo.scaleX * e.velocity / 50;
-			_spDemo.scaleY += _spDemo.scaleY * e.velocity / 50;
+			_spDemo.scaleX = e.scale;
+			_spDemo.scaleY = e.scale;
 			
 		}
 
