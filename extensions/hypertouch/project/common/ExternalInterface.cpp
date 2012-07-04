@@ -77,12 +77,15 @@ extern "C"{
 		val_call2( eval_callback_pinch -> get( ) , alloc_float( scale )  , alloc_float( velocity ) ); 
 	}
 
-	void callbackPan( float fx , float fy , float vx , float vy ){
-		value args = alloc_array( 4 );
-		val_array_set_i( args , 0 , alloc_float( fx ) );
-		val_array_set_i( args , 1 , alloc_float( fy ) );
-		val_array_set_i( args , 2 , alloc_float( vx ) );
-		val_array_set_i( args , 3 , alloc_float( vy ) );
+	void callbackPan( int phase , float tx , float ty , float vx , float vy , float cx , float cy ){
+		value args = alloc_array( 7 );
+		val_array_set_i( args , 0 , alloc_int( phase ) );
+		val_array_set_i( args , 1 , alloc_float( tx ) );
+		val_array_set_i( args , 2 , alloc_float( ty ) );
+		val_array_set_i( args , 3 , alloc_float( vx ) );
+		val_array_set_i( args , 4 , alloc_float( vy ) );
+		val_array_set_i( args , 5 , alloc_float( cx ) );
+		val_array_set_i( args , 6 , alloc_float( cy ) );
    		val_call1( eval_callback_pan -> get( ) , args ); 
    	}
 
@@ -106,8 +109,17 @@ extern "C"{
 		val_call1( eval_callback_pinch -> get( ) , alloc_float( scale ) ); 
     }
 
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_HyperTouch_onPan( JNIEnv * env, jobject  obj , jfloat fx , jfloat fy ){
-    	val_call2( eval_callback_pan -> get( ) , alloc_float( fx ) , alloc_float( fy ) );
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_HyperTouch_onPan( JNIEnv * env, jobject  obj , jint phase , jfloat fx , jfloat fy , jfloat vx , jfloat vy , jfloat cx , jfloat cy , jfloat pressure ){
+    	value args = alloc_array( 8 );
+		val_array_set_i( args , 0 , alloc_int( phase ) );
+		val_array_set_i( args , 1 , alloc_float( fx ) );
+		val_array_set_i( args , 2 , alloc_float( fy ) );
+		val_array_set_i( args , 3 , alloc_float( vx ) );
+		val_array_set_i( args , 4 , alloc_float( vy ) );
+		val_array_set_i( args , 5 , alloc_float( cx ) );
+		val_array_set_i( args , 6 , alloc_float( cy ) );
+		val_array_set_i( args , 7 , alloc_float( pressure ) );
+   		val_call1( eval_callback_pan -> get( ) , args ); 
     }
     #endif
 

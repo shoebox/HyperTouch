@@ -185,18 +185,10 @@ class HyperTouch extends EventDispatcher{
 		* @param 	args : Callback arguments coordinates ( Array<Float> )
 		* @return	void
 		*/
-		#if iphone
 		private function _onPanCallback( args : Array<Float> ) : Void{
-			_onDispatchPan( args[ 2 ] , args[ 3 ] , args[ 0 ] , args[ 1 ] );
+			Reflect.callMethod( this , _onDispatchPan , args );
 		}
-		#end
-
-		#if android
-		private function _onPanCallback( fx : Float , fy : Float ) : Void{
-			_onDispatchPan( -fx , -fy , 0 , 0 );
-		}
-		#end
-
+	
 		/**
 		* Callback of the Pinch Listener
 		* 
@@ -428,9 +420,21 @@ class HyperTouch extends EventDispatcher{
 		* @param	vy : Y velocity ( Float )
 		* @return	void
 		*/
-		private function _onDispatchPan( fx : Float , fy : Float , vx : Float , vy : Float ) : Void{
+		#if android
+		private function _onDispatchPan( iPhase : Int , tx : Float , ty : Float , vx : Float , vy : Float , fCenterX : Float , fCenterY : Float , fPressure : Float ) : Void{
+		#else
+		private function _onDispatchPan( iPhase : Int , tx : Float , ty : Float , vx : Float , vy : Float , fCenterX : Float , fCenterY : Float ) : Void{
+		#end
 			_disable( GesturePanEvent.PAN );
-			dispatchEvent( new GesturePanEvent( fx , fy , vx , vy ) );
+			
+			#if android
+			var ev = new GesturePanEvent( -tx , -ty , vx / nme.Lib.current.stage.stageWidth , vy / nme.Lib.current.stage.stageHeight , fCenterX , fCenterY);
+				ev.pressure = fPressure;
+			#else
+			var ev = new GesturePanEvent( tx , ty , vx / nme.Lib.current.stage.stageWidth , vy / nme.Lib.current.stage.stageHeight , fCenterX , fCenterY);
+			#end
+				ev.phase = iPhase;
+			dispatchEvent( ev );
 		}
 
 		/**

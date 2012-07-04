@@ -10,7 +10,7 @@
 		void callbackTwix(float fx , float fy );	
 		void callbackSwipe( int direction );
 		void callbackRotation( float rotation , float velocity );
-		void callbackPan( float fx , float fy , float vx , float vy );		
+		void callbackPan( int phase , float tx , float ty , float vx , float vy , float cx , float cy );		
 		void callback( const char * type , float* charArray );	
 		void callbackPinch( float scale , float velocity );
 	} 
@@ -333,12 +333,27 @@
 			}
 
 			- (void)handlePan:( UIPanGestureRecognizer * ) recognizer{
-				if (recognizer.state == UIGestureRecognizerStateChanged){
-					CGPoint transation = [recognizer translationInView:recognizer.view];
-					CGPoint velocity   = [recognizer velocityInView:recognizer.view];
-					//NSLog( @"handlePan location %@ , velocity %@" , NSStringFromCGPoint(location) , NSStringFromCGPoint(velocity));
-					callbackPan( transation.x , transation.y , velocity.x , velocity.y );
+
+				int phase = -1;
+				if( recognizer.state == UIGestureRecognizerStateBegan )
+					phase = 0;
+
+				if( recognizer.state == UIGestureRecognizerStateChanged )
+					phase = 1;
+
+				if( recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled )
+					phase = 2;
+
+				NSLog( @"handlePan %i" , phase );
+				if ( phase != -1 ){
+					CGPoint translation	= [ recognizer translationInView:recognizer.view];
+					CGPoint center		= [ recognizer locationInView:recognizer.view ];
+					CGPoint velocity	= [ recognizer velocityInView:recognizer.view];
+					NSLog( @"handlePan location %@ , velocity %@" , NSStringFromCGPoint( translation ) , NSStringFromCGPoint(velocity));
+					callbackPan( phase , translation.x , translation.y , velocity.x , velocity.y , center.x , center.y );
+					[recognizer setTranslation:CGPointMake(0, 0) inView : recognizer.view];
 				}
+				
 			}
 
 			-( void ) handlePinch:( UIPinchGestureRecognizer * ) recognizer{
