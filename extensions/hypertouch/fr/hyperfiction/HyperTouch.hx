@@ -199,8 +199,6 @@ class HyperTouch extends EventDispatcher{
 		*/
 		#if android
 		private function _onPinchCallback( fScale : Float ) : Void{
-			trace('_onPinchCallback ::: '+fScale);
-
 			try{
 				_onDispatchPinch( fScale , 0.0 );	
 			}catch( e : nme.errors.Error ){
@@ -234,7 +232,6 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		private function _onSwipeCallback( direction : Int ) : Void{
-			trace('_onSwipeCallback');
 			_onDispatchSwipe( direction );
 		}		
 
@@ -265,7 +262,6 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		private function _onTap2Callback( fx : Float , fy : Float ) : Void{
-			trace('_onTap2Callback ::: '+fx+' || '+fy);
 			#if iphone
 			var res = _convertToGl( fx , fy );
 			_onDispatchTap( res.x , res.y , 1 , 2 );
@@ -283,7 +279,6 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		private function _onTwixCallback( fx : Float , fy : Float ) : Void{
-			trace('_onTwixCallback ::: '+fx+' || '+fy);
 			#if iphone
 			var res = _convertToGl( fx , fy );
 			_onDispatchTap( res.x , res.y , 2 , 1 );
@@ -463,6 +458,12 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		private function _disable( type : String ) : Void{
+
+			//We disable the taps gestures only if all taps gestures are disabled
+			if( type == GestureTapEvent.TAP || type == GestureTapEvent.DOUBLE_TAP || type == GestureTapEvent.TWO_FINGERS_TAP )
+				if( hasEventListener( GestureTapEvent.TAP ) || hasEventListener( GestureTapEvent.DOUBLE_TAP ) || hasEventListener( GestureTapEvent.TWO_FINGERS_TAP ) )
+					return;
+
 			if( !hasEventListener( type ) ){
 				#if iphone
 				hyp_touch_deactivate( getCode( type ) );

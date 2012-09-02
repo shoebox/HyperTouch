@@ -50,7 +50,7 @@ class GesturePanEvent extends Event{
 		* @return	void
 		*/
 		override public function toString( ) : String {
-			return '[ '+PAN+' offsetX : '+offsetX+' offsetY : '+offsetY+' ]';
+			return '[ '+PAN+' offsetX : '+offsetX+' offsetY : '+offsetY+' phase : '+phase+']';
 		}
 
 	// -------o protected

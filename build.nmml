@@ -10,13 +10,13 @@
 	<set name="SWF_VERSION" value="10.1" />
 	
 	<classpath name="src" />
-	<classpath name="../inthebox/src/" />
 	
 	<haxelib name="actuate" />
 	<haxelib name="nme" />
-		
-	<assets path="Assets" rename="assets" include="*" exclude="*.fla"/>
 	
+	<!--
+	<assets path="Assets" rename="assets" include="*" exclude="*.fla"/>
+	-->
 	
 	<ndll name="std" />
 	<ndll name="regexp" />

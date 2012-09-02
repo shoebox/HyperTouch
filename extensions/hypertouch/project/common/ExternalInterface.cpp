@@ -97,6 +97,10 @@ extern "C"{
         val_call2( eval_callback_tap -> get( ) , alloc_float( fx ) , alloc_float( fy ) );
     }
 
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_HyperTouch_onTwix(JNIEnv * env, jobject  obj , jfloat fx , jfloat fy ){
+        val_call2( eval_callback_twix -> get( ) , alloc_float( fx ) , alloc_float( fy ) );
+    }
+
     JNIEXPORT void JNICALL Java_fr_hyperfiction_HyperTouch_onDoubleTap(JNIEnv * env, jobject  obj , jfloat fx , jfloat fy ){
 		val_call2( eval_callback_tap2 -> get( ) , alloc_float( fx ) , alloc_float( fy ) );
     }

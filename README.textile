@@ -6,11 +6,17 @@ h3. Gestures Currently supported are:
 
 - Tap
 - Double Tap
-- Two Fingers Tap ( iOS only for now )
+- Two Fingers Tap
 - Pinch
 - Rotate ( iOS only for now )
 - Swipe 
 - Pan
+
+h2. Updates
+
+h2.09/10/2012 : 
+Android overhaul for more performance and readability of the java code.
+Add two fingers tap and DoubleTap.
 
 h2. Getting started
 
@@ -32,21 +38,23 @@ var hyp = HyperTouch.getInstance( );
 
 h2. TODO:
 
-I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is welcome.
-
 - Long Press
-- TwoFingers Tap on Android
 - Velocity
 - Maybe pressures... support on Android
+- Gestures phases
+- Rotation for android
 ( ... )
 
 h2. Misc
+
+I'm not an Objective-C / Java pro-coder, so any suggestion / optimization is welcome.
+I need more feedbacks, bugs...
 
 h3. Tested on Devices :
 
 Android:
 - Nexus One 2.3.6
-- Motorola Xoom 4.0.3
+- Motorola Xoom 4.1.1
 - Galaxy Nexus 4.0
 
 iOS:
