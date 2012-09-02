@@ -14,7 +14,7 @@ h3. Gestures Currently supported are:
 
 h2. Updates
 
-h2.09/10/2012 : 
+h2. 09/10/2012 : 
 Android overhaul for more performance and readability of the java code.
 Add two fingers tap and DoubleTap.
 
