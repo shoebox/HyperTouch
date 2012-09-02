@@ -22,6 +22,7 @@ class PanDetector extends GestureDetector.SimpleOnGestureListener{
 
 	private VelocityTracker mVelocityTracker;
 	private Boolean _bScrolling;
+	private Boolean _recycleVelocityTracker;
 
 	// -------o constructor
 		
@@ -34,6 +35,7 @@ class PanDetector extends GestureDetector.SimpleOnGestureListener{
 		public PanDetector() {
 			trace("constructor");
 			_bScrolling = false;
+			_recycleVelocityTracker = false;
 		}
 	
 	// -------o public
@@ -69,8 +71,15 @@ class PanDetector extends GestureDetector.SimpleOnGestureListener{
 	                if( _bScrolling && ev.getPointerCount( ) == 1 ){
 	                	_endScroll( ev );
 	                }
+	                _recycleVelocityTracker = true;
+					//Nothing can use mVelocityTracker after it gets recycled
+					// mVelocityTracker.recycle();
 	                break;
 	        }
+	        if (_recycleVelocityTracker){
+				_recycleVelocityTracker = false;
+				 mVelocityTracker.recycle();
+			}
 			return false;
 		}
 
