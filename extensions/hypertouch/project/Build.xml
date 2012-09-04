@@ -41,12 +41,16 @@
   </files>
 
   <files id="iphone">
+
       <depend name="${HXCPP}/include/hx/Macros.h"/>
       <depend name="${HXCPP}/include/hx/CFFI.h"/>
       <compilerflag value="-IiPhone/include"/>
       <compilerflag value="-Iinclude"/>
       <file name="iPhone/HyperTouch.mm"/>
   </files>
+
+  <set name="IOS_ARCH" value="-v7" if="HXCPP_ARMV7" />
+  <set name="name_extra" value=".iphoneos${IOS_ARCH}" if="iphoneos"/>
 
   <target id="NDLL" output="${name_prefix}hypertouch${name_extra}" tool="linker" toolid="${ndll-tool}">
       <outdir name="../ndll/${BINDIR}" />
