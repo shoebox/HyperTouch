@@ -3,6 +3,17 @@ package fr.hyperfiction.hypertouch;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
 
+#if android
+import haxe.Timer;
+import nme.events.Event;
+import nme.JNI;
+#end
+
+#if cpp
+import cpp.Lib;
+import nme.Lib;
+#end
+
 /**
  * ...
  * @author shoe[box]
@@ -17,9 +28,10 @@ class HyperTouch{
 	private var _hGestures : IntHash<AGesture>;
 
 	#if android
-	private var _java_instance : Dynamic;
-	private var _f_disable : Dynamic;
-	private var _f_enable : Dynamic;
+	private var _f_disable    : Dynamic;
+	private var _f_enable     : Dynamic;
+	private var _java_instance: Dynamic;
+	private var _timer        : Timer;
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.HyperTouch';
 	#end
 
@@ -66,7 +78,7 @@ class HyperTouch{
 			_hGestures = new IntHash<AGesture>( );
 
 			#if android
-			Lib.current.stage.addEventListener( nme.events.Event.DEACTIVATE , _onDeactivate , false );
+			nme.Lib.current.stage.addEventListener( Event.DEACTIVATE , _onDeactivate , false );
 			#end
 		}
 
@@ -80,14 +92,41 @@ class HyperTouch{
 		*/
 		private function _onDeactivate( _ ) : Void{
 			trace('_onDeactivate');
-			if( _java_instance == null ){
-				var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '(II)Lfr/hyperfiction/hypertouch/GestureTap;');
-				_java_instance = f( );
-			}
 			
-			if( _f_disable == null )
-				_f_disable = JNI.createMemberMethod( ANDROID_CLASS , disable , '()V' );
-				_f_disable( _java_instance );
+			//
+				if( _timer != null )
+					_timer.stop( );
+
+			//Instance of the HyperTouch java class
+				if( _java_instance == null ){
+					var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/HyperTouch;');
+					_java_instance = f( );
+				}
+
+			//Calling the disable function
+				if( _f_disable == null )
+					_f_disable = JNI.createMemberMethod( ANDROID_CLASS , 'disable' , '()V' );
+					_f_disable( _java_instance );
+
+				nme.Lib.current.stage.addEventListener( Event.ACTIVATE , _onActivate , false );
+		}
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _onActivate( _ ) : Void{
+			trace('_onActivate');
+			if( _f_enable == null )
+				_f_enable = JNI.createMemberMethod( ANDROID_CLASS , 'enable' , '()V' );
+			
+			//Waiting for the GLSurfaceView reinitialization
+				_timer = Timer.delay( function( ){
+											_f_enable( _java_instance );
+											} , 10 );
+
 		}
 
 		#end

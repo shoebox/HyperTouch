@@ -43,8 +43,7 @@ class HyperTouch implements View.OnTouchListener{
 		public HyperTouch() {
 			trace("constructor");
 			gestures = new ArrayList<View.OnTouchListener>( );
-			mSurface = ( GLSurfaceView ) GameActivity.getInstance( ).getCurrentFocus( );	
-			GameActivity.getInstance( ).getCurrentFocus( ).setOnTouchListener( this );
+			enable( );
 		}
 	
 	// -------o public
@@ -85,7 +84,11 @@ class HyperTouch implements View.OnTouchListener{
 		* @return	void
 		*/
 		public void enable( ){
-			trace("enable");
+			trace("enable ::: ");
+			trace("GameActivity ::: "+GameActivity.getInstance( ));
+			trace("focus ::: "+GameActivity.getInstance( ).getCurrentFocus( ));
+			mSurface = ( GLSurfaceView ) GameActivity.getInstance( ).getCurrentFocus( );	
+			GameActivity.getInstance( ).getCurrentFocus( ).setOnTouchListener( this );
 		}
 
 		/**
@@ -94,7 +97,7 @@ class HyperTouch implements View.OnTouchListener{
 		* @public
 		* @return	void
 		*/
-		public  void disable( ){
+		public void disable( ){
 			trace("disable");
 		}
 
