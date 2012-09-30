@@ -50,9 +50,10 @@ class HyperTouch{
 	// -------o public
 				
 		/**
-		* 
+		* Adding a new listener for the <code>GestureType</code> gesture
 		* 
 		* @public
+		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
 		*/
 		public function add( gesture : GestureTypes ) : Void {
@@ -69,7 +70,7 @@ class HyperTouch{
 	// -------o protected
 		
 		/**
-		* 
+		* Initialization
 		* 
 		* @private
 		* @return	void
@@ -85,7 +86,7 @@ class HyperTouch{
 		#if android
 
 		/**
-		* 
+		* When the stage is deactivate == Activity deactived
 		* 
 		* @private
 		* @return	void
@@ -112,7 +113,8 @@ class HyperTouch{
 		}
 
 		/**
-		* 
+		* Reactivation of the stage == Android listener reactivation
+		* A timer is used to give some time to the activity to reenable everything
 		* 
 		* @private
 		* @return	void
@@ -132,9 +134,11 @@ class HyperTouch{
 		#end
 
 		/**
-		* 
+		* Add a tap listener with the specified fingers count & taps count
 		* 
 		* @private
+		* @param 	fingers_count: Finger count ( Int )
+		* @param 	taps_count   : Taps count ( Int )
 		* @return	void
 		*/
 		private function _add_tap_with( fingers_count : Int , taps_count : Int = 1 ) : Void{
@@ -171,9 +175,10 @@ class HyperTouch{
 	// -------o misc
 		
 		/**
-		* 
+		* Static method to listen a new <code>GestureType</code>
 		* 
 		* @public
+		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
 		*/
 		static public function add_listener_for( gesture : GestureTypes ) : Void {
@@ -181,10 +186,10 @@ class HyperTouch{
 		}
 
 		/**
-		* 
+		* Singleton of the class
 		* 
 		* @public
-		* @return	void
+		* @return	singleton instance of the class
 		*/
 		static public function getInstance( ) : HyperTouch {
 			
