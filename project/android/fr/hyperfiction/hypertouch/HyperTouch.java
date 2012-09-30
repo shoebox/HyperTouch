@@ -20,18 +20,6 @@ class HyperTouch implements View.OnTouchListener{
 
 	private static String TAG = "HyperTouch";
 
-	//JNI
-		
-		static public native void onTwix( float fx , float fy );
-		static public native void onDoubleTap( float fx , float fy );
-		static public native void onPan( int phase , float fx , float fy , float vx , float vy , float cx , float cy , float pressure );
-		static public native void onPinch( float scale );
-		static public native void onSwipe( int dir );
-		
-		static {
-			System.loadLibrary( "hypertouch" ); 
-		}
-
 	// -------o constructor
 		
 		/**

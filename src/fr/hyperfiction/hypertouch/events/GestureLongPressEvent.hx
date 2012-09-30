@@ -8,9 +8,8 @@ import nme.events.Event;
  * @author shoe[box]
  */
 
-class GestureTapEvent extends Event{
+class GestureLongPressEvent extends Event{
 	
-	public var fingersCount: Int;
 	public var iPhase      : Int;
 	public var iPointerId  : Int;	
 	public var sizeX       : Float;
@@ -19,10 +18,8 @@ class GestureTapEvent extends Event{
 	public var stageY      : Float;
 	public var fPressure   : Float;
 
-	public static inline var TAP : String = 'GestureTapEvent_TAP';
-	public static inline var DOUBLE_TAP : String = 'GestureTapEvent_DOUBLE_TAP';
-	public static inline var TWO_FINGERS : String = 'GestureTapEvent_TWO_FINGERS';
-
+	public static inline var LONG_PRESS : String = 'GestureLongPressEvent_LONG_PRESS';
+	
 	// -------o constructor
 		
 		/**
@@ -60,7 +57,7 @@ class GestureTapEvent extends Event{
 		* @return	void
 		*/
 		override public function clone( ) : Event {
-			return new GestureTapEvent( type , iPhase , iPointerId , sizeX , sizeY , stageX , stageY , fPressure );
+			return new GestureLongPressEvent( type , iPhase , iPointerId , sizeX , sizeY , stageX , stageY , fPressure );
 						
 		}
 
@@ -71,7 +68,7 @@ class GestureTapEvent extends Event{
 		* @return	void
 		*/
 		override public function toString( ) : String {
-			return '[GestureTapEvent ::: '+type+']';
+			return '[GestureLongPressEvent ::: '+type+']';
 		}
 
 	// -------o protected

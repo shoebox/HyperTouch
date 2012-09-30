@@ -35,6 +35,7 @@ using namespace Hyperfiction;
 #endif
 
 AutoGCRoot *eval_callback_tap = 0;
+AutoGCRoot *eval_callback_longpress = 0;
 
 extern "C"{
 	
@@ -72,6 +73,28 @@ extern "C"{
         val_call1( eval_callback_tap -> get( ) , args ); 
     }
 
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureLongPress_onLongPress(
+																	JNIEnv * env, 
+																	jobject  obj ,
+																	jint iPhase,
+																	jint iPointerId,
+																	jfloat fx , 
+																	jfloat fy ,
+																	jfloat fPressure,
+																	jfloat fSizeX,
+																	jfloat fSizeY
+    															){
+    	value args = alloc_array( 7 );
+    	val_array_set_i( args , 0 , alloc_int( iPhase ) );
+    	val_array_set_i( args , 1 , alloc_int( iPointerId ) );
+    	val_array_set_i( args , 2 , alloc_float( fx ) );
+    	val_array_set_i( args , 3 , alloc_float( fy ) );
+    	val_array_set_i( args , 4 , alloc_float( fPressure ) );
+    	val_array_set_i( args , 5 , alloc_float( fSizeX ) );
+    	val_array_set_i( args , 6 , alloc_float( fSizeY ) );
+        val_call1( eval_callback_longpress -> get( ) , args ); 
+    }
+
     #endif
 }
 
@@ -84,3 +107,11 @@ extern "C"{
 		    return alloc_bool( true );
 		}
 		DEFINE_PRIM( set_callback_tap , 1 );
+
+	//Longpress callback
+		static value set_callback_long_press( value onCall ){
+			printf("set_callback_long_press");
+			eval_callback_longpress = new AutoGCRoot( onCall );
+		    return alloc_bool( true );
+		}
+		DEFINE_PRIM( set_callback_long_press , 1 );			

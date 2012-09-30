@@ -2,6 +2,7 @@ package fr.hyperfiction.hypertouch;
 
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
+import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
 
 #if android
 import haxe.Timer;
@@ -21,9 +22,10 @@ import nme.Lib;
 
 class HyperTouch{
 
-	public static inline var GESTURE_TAP_1 : Int = 0;
-	public static inline var GESTURE_TAP_2 : Int = 1;
-	public static inline var GESTURE_TWO_FINGERS_TAP : Int = 2;
+	public static inline var GESTURE_TAP_1          : Int = 0;
+	public static inline var GESTURE_TAP_2          : Int = 1;
+	public static inline var GESTURE_TWO_FINGERS_TAP: Int = 2;
+	public static inline var GESTURE_LONG_PRESS     : Int = 3;
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -62,6 +64,9 @@ class HyperTouch{
 
 				case TAP( fingers_count , taps_count ):
 					_add_tap_with( fingers_count , taps_count );
+
+				case LONGPRESS:
+					_add_long_press( );
 
 			}
 						
@@ -168,8 +173,22 @@ class HyperTouch{
 				_hGestures.set( value , g );
 
 			}
+		}
 
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _add_long_press( ) : Void{
+			if( !_hGestures.exists( GESTURE_LONG_PRESS ) ){
 
+				var g = new GestureLongPress( );
+					g.enabled = true;
+				_hGestures.set( GESTURE_LONG_PRESS , g );
+
+			}
 		}
 
 	// -------o misc
@@ -206,5 +225,6 @@ class HyperTouch{
 enum GestureTypes{
 
 	TAP( fingers_count : Int , ?taps_count : Int );
+	LONGPRESS;
 
 }
