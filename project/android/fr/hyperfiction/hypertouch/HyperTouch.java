@@ -78,6 +78,26 @@ class HyperTouch implements View.OnTouchListener{
 			gestures.add( g );
 		}
 
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		public void enable( ){
+			trace("enable");
+		}
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		public  void disable( ){
+			trace("disable");
+		}
+
 	// -------o protected
 	
 		

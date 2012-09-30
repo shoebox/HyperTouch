@@ -16,6 +16,13 @@ class HyperTouch{
 
 	private var _hGestures : IntHash<AGesture>;
 
+	#if android
+	private var _java_instance : Dynamic;
+	private var _f_disable : Dynamic;
+	private var _f_enable : Dynamic;
+	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.HyperTouch';
+	#end
+
 	// -------o constructor
 		
 		/**
@@ -25,7 +32,7 @@ class HyperTouch{
 		* @return	void
 		*/
 		private function new() {
-			_hGestures = new IntHash<AGesture>( );
+			_init( );
 		}
 	
 	// -------o public
@@ -48,7 +55,43 @@ class HyperTouch{
 		}
 
 	// -------o protected
-	
+		
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _init( ) : Void{
+			_hGestures = new IntHash<AGesture>( );
+
+			#if android
+			Lib.current.stage.addEventListener( nme.events.Event.DEACTIVATE , _onDeactivate , false );
+			#end
+		}
+
+		#if android
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _onDeactivate( _ ) : Void{
+			trace('_onDeactivate');
+			if( _java_instance == null ){
+				var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '(II)Lfr/hyperfiction/hypertouch/GestureTap;');
+				_java_instance = f( );
+			}
+			
+			if( _f_disable == null )
+				_f_disable = JNI.createMemberMethod( ANDROID_CLASS , disable , '()V' );
+				_f_disable( _java_instance );
+		}
+
+		#end
+
 		/**
 		* 
 		* 
