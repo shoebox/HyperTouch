@@ -53,7 +53,7 @@ class GestureLongPress extends AGesture{
 	// -------o protected
 		
 		/**
-		* 
+		* Long press callback method ( cf ExternalInteface.cpp )
 		* 
 		* @private
 		* @return	void
@@ -63,7 +63,7 @@ class GestureLongPress extends AGesture{
 		}
 
 		/**
-		* 
+		* Emit the longpress
 		* 
 		* @private
 		* @return	void
@@ -90,6 +90,7 @@ class GestureLongPress extends AGesture{
 		*/
 		private function _set_enabled( b : Bool ) : Bool{
 
+			//TODO : Disable gesture
 			if( b )
 				_activate( );
 
@@ -111,7 +112,7 @@ class GestureLongPress extends AGesture{
 		#if android
 
 		/**
-		* 
+		* Android activation of the gesture
 		* 
 		* @private
 		* @return	void
