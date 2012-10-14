@@ -36,6 +36,8 @@ using namespace Hyperfiction;
 
 AutoGCRoot *eval_callback_tap = 0;
 AutoGCRoot *eval_callback_longpress = 0;
+AutoGCRoot *eval_callback_swipe = 0;
+AutoGCRoot *eval_callback_pinch = 0;
 
 extern "C"{
 	
@@ -95,6 +97,42 @@ extern "C"{
         val_call1( eval_callback_longpress -> get( ) , args ); 
     }
 
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureSwipe_onSwipe(
+																	JNIEnv * env, 
+																	jobject  obj ,
+																	jint dir,
+																	jfloat vx , 
+																	jfloat vy ,
+																	jfloat dx , 
+																	jfloat dy
+    															){
+    	value args = alloc_array( 5 );
+    	val_array_set_i( args , 0 , alloc_int( dir ) );
+    	val_array_set_i( args , 1 , alloc_float( vx ) );
+    	val_array_set_i( args , 2 , alloc_float( vy ) );
+    	val_array_set_i( args , 3 , alloc_float( dx ) );
+    	val_array_set_i( args , 4 , alloc_float( dy ) );
+      	val_call1( eval_callback_swipe -> get( ) , args ); 
+    }
+
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GesturePinch_onPinch(
+																	JNIEnv * env, 
+																	jobject  obj ,
+																	jfloat dx , 
+																	jfloat dy ,
+																	jfloat scaleX , 
+																	jfloat scaleY
+    															){
+    	
+    	value args = alloc_array( 4 );
+    	val_array_set_i( args , 0 , alloc_float( dx ) );
+    	val_array_set_i( args , 1 , alloc_float( dy ) );
+    	val_array_set_i( args , 2 , alloc_float( scaleX ) );
+    	val_array_set_i( args , 3 , alloc_float( scaleY ) );
+      	val_call1( eval_callback_pinch -> get( ) , args ); 
+      	
+    }
+
     #endif
 }
 
@@ -114,4 +152,24 @@ extern "C"{
 			eval_callback_longpress = new AutoGCRoot( onCall );
 		    return alloc_bool( true );
 		}
-		DEFINE_PRIM( set_callback_long_press , 1 );			
+		DEFINE_PRIM( set_callback_long_press , 1 );		
+
+	//Swipe callback
+		static value set_callback_swipe( value onCall ){
+			printf("set_callback_swipe");
+			eval_callback_swipe = new AutoGCRoot( onCall );
+		    return alloc_bool( true );
+		}
+		DEFINE_PRIM( set_callback_swipe , 1 );		
+
+	//Pinch callback
+		static value set_callback_pinch( value onCall ){
+			printf("set_callback_pinch");
+			eval_callback_pinch = new AutoGCRoot( onCall );
+		    return alloc_bool( true );
+		}
+		DEFINE_PRIM( set_callback_pinch , 1 );	
+
+
+		
+

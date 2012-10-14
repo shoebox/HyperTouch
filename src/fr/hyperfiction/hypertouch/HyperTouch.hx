@@ -1,8 +1,10 @@
 package fr.hyperfiction.hypertouch;
 
 import fr.hyperfiction.hypertouch.gestures.AGesture;
+import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
 import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
+import fr.hyperfiction.hypertouch.gestures.GesturePinch;
 
 #if android
 import haxe.Timer;
@@ -26,6 +28,8 @@ class HyperTouch{
 	public static inline var GESTURE_TAP_2          : Int = 1;
 	public static inline var GESTURE_TWO_FINGERS_TAP: Int = 2;
 	public static inline var GESTURE_LONG_PRESS     : Int = 3;
+	public static inline var GESTURE_SWIPE          : Int = 4;
+	public static inline var GESTURE_PINCH          : Int = 5;
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -67,6 +71,12 @@ class HyperTouch{
 
 				case LONGPRESS:
 					_add_long_press( );
+
+				case SWIPE:
+					_listen_for_swipe( );
+
+				case PINCH:
+					_listen_for_pinch( );
 
 			}
 						
@@ -137,6 +147,41 @@ class HyperTouch{
 		}
 
 		#end
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _listen_for_swipe( ) : Void{
+			
+			if( !_hGestures.exists( GESTURE_SWIPE ) ){
+
+				var g = new GestureSwipe( );
+					g.enabled = true;
+				_hGestures.set( GESTURE_SWIPE , g );
+
+			}
+
+		}
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _listen_for_pinch( ) : Void{
+			trace('_listen_for_pinch ::: ');
+			if( !_hGestures.exists( GESTURE_PINCH ) ){
+
+				var g = new GesturePinch( );
+					g.enabled = true;
+				_hGestures.set( GESTURE_PINCH , g );
+
+			}
+		}
 
 		/**
 		* Add a tap listener with the specified fingers count & taps count
@@ -226,5 +271,7 @@ enum GestureTypes{
 
 	TAP( fingers_count : Int , ?taps_count : Int );
 	LONGPRESS;
+	SWIPE;
+	PINCH;
 
 }

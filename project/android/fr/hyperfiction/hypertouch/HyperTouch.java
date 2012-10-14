@@ -45,7 +45,7 @@ class HyperTouch implements View.OnTouchListener{
 		public boolean onTouch( View v , final MotionEvent ev) {
 			
 			boolean res = false;
-			for( View.OnTouchListener g : gestures ){
+			for( View.OnTouchListener g : gestures ){				
 				res = g.onTouch( v , ev );
 				if( res )
 					break;
