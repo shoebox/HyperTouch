@@ -15,16 +15,16 @@ import nme.Lib;
  * ...
  * @author shoe[box]
  */
-class GestureSwipe extends AGesture{
+class GesturePan extends AGesture{
 
 	public var enabled( default , _set_enabled ) : Bool;
 
-	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureSwipe';
+	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GesturePan';
 
 	private var _java_instance : Dynamic;
 
 	#if mobile
-	private static var eval_callback_tap = Lib.load( "hypertouch" , "set_callback_swipe", 1);
+	private static var eval_callback_pan = Lib.load( "hypertouch" , "set_callback_pan", 1);
 	#end
 
 	// -------o constructor
@@ -70,9 +70,7 @@ class GestureSwipe extends AGesture{
 			_android( );
 			#end	
 
-			#if cpp
-			eval_callback_tap( _onSwipe );
-			#end
+			eval_callback_pan( _onPan );
 		}
 
 		#if android
@@ -85,9 +83,8 @@ class GestureSwipe extends AGesture{
 		*/
 		private function _android( ) : Void{
 			trace('_android');
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GestureSwipe;');
-			_java_instance = f( );
-				
+			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GesturePan;');
+			_java_instance = f( );				
 		}
 
 		#end	
@@ -98,8 +95,8 @@ class GestureSwipe extends AGesture{
 		* @private
 		* @return	void
 		*/
-		private function _onSwipe( a : Array<Dynamic> ) : Void{
-			trace('onSwipe ::: '+a);
+		private function _onPan( a : Array<Dynamic> ) : Void{
+			trace('_onPan ::: '+a.join(' || '));
 		}
 
 	// -------o misc

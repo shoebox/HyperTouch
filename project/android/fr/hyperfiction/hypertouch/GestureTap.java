@@ -119,7 +119,6 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		* @return	void
 		*/
 		public boolean onSingleTapUp( MotionEvent e ) {
-
 			if( _taps_count == 1 && _fingers_count == 1 ){
 				_emit( 1 , 1 , e );
 			}

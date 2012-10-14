@@ -20,11 +20,7 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 	private static String TAG = "HyperTouch :: GesturePinch";
 
 	final private ScaleGestureDetector oPinchGesture;
-	private Float _fX1;
-	private Float _fX2;
-	private Float _fY1;
-	private Float _fY2;
-
+	
 	static public native void onPinch( 
 											float dx , 
 											float dy , 
@@ -86,7 +82,8 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 		*/
 		@Override
 		public boolean onTouch( View v , MotionEvent e ) {
-			return oPinchGesture.onTouchEvent( e );
+			oPinchGesture.onTouchEvent( e );
+			return false;
 		}
 		
 	// -------o protected

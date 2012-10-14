@@ -1,10 +1,11 @@
 package fr.hyperfiction.hypertouch;
 
 import fr.hyperfiction.hypertouch.gestures.AGesture;
+import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
+import fr.hyperfiction.hypertouch.gestures.GesturePan;
+import fr.hyperfiction.hypertouch.gestures.GesturePinch;
 import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
-import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
-import fr.hyperfiction.hypertouch.gestures.GesturePinch;
 
 #if android
 import haxe.Timer;
@@ -30,6 +31,7 @@ class HyperTouch{
 	public static inline var GESTURE_LONG_PRESS     : Int = 3;
 	public static inline var GESTURE_SWIPE          : Int = 4;
 	public static inline var GESTURE_PINCH          : Int = 5;
+	public static inline var GESTURE_PAN            : Int = 6;
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -77,6 +79,9 @@ class HyperTouch{
 
 				case PINCH:
 					_listen_for_pinch( );
+
+				case PAN:
+					_listen_for_pan( );
 
 			}
 						
@@ -184,6 +189,23 @@ class HyperTouch{
 		}
 
 		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _listen_for_pan( ) : Void{
+			trace('_listen_for_pan');
+			if( !_hGestures.exists( GESTURE_PAN ) ){
+
+				var g = new GesturePan( );
+					g.enabled = true;
+				_hGestures.set( GESTURE_PAN , g );
+
+			}
+		}
+
+		/**
 		* Add a tap listener with the specified fingers count & taps count
 		* 
 		* @private
@@ -273,5 +295,6 @@ enum GestureTypes{
 	LONGPRESS;
 	SWIPE;
 	PINCH;
+	PAN;
 
 }

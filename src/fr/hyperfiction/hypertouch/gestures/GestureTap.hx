@@ -67,7 +67,6 @@ class GestureTap extends AGesture{
 			var fingers = a[ 0 ];
 			var taps = a[ 1 ];
 
-
 			switch( fingers ){
 
 				case 1:

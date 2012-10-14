@@ -34,10 +34,11 @@ using namespace Hyperfiction;
 	};
 #endif
 
-AutoGCRoot *eval_callback_tap = 0;
 AutoGCRoot *eval_callback_longpress = 0;
-AutoGCRoot *eval_callback_swipe = 0;
+AutoGCRoot *eval_callback_pan = 0;
 AutoGCRoot *eval_callback_pinch = 0;
+AutoGCRoot *eval_callback_swipe = 0;
+AutoGCRoot *eval_callback_tap = 0;
 
 extern "C"{
 	
@@ -129,8 +130,28 @@ extern "C"{
     	val_array_set_i( args , 1 , alloc_float( dy ) );
     	val_array_set_i( args , 2 , alloc_float( scaleX ) );
     	val_array_set_i( args , 3 , alloc_float( scaleY ) );
-      	val_call1( eval_callback_pinch -> get( ) , args ); 
-      	
+      	val_call1( eval_callback_pinch -> get( ) , args );       	
+    }
+
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GesturePan_onPan(
+																	JNIEnv * env, 
+																	jobject  obj ,
+																	jint phase,
+																	jfloat fx , 
+																	jfloat fy ,
+																	jfloat vx , 
+																	jfloat vy ,
+																	jfloat pressure
+    															){
+    	
+    	value args = alloc_array( 6 );
+    	val_array_set_i( args , 0 , alloc_int( phase ) );
+    	val_array_set_i( args , 1 , alloc_float( fx ) );
+    	val_array_set_i( args , 2 , alloc_float( fy ) );
+    	val_array_set_i( args , 3 , alloc_float( vx ) );
+    	val_array_set_i( args , 4 , alloc_float( vy ) );
+    	val_array_set_i( args , 5 , alloc_float( pressure ) );
+    	val_call1( eval_callback_pan -> get( ) , args );       	
     }
 
     #endif
@@ -170,6 +191,13 @@ extern "C"{
 		}
 		DEFINE_PRIM( set_callback_pinch , 1 );	
 
+	//Pan callback
+		static value set_callback_pan( value onCall ){
+			printf("set_callback_pan");
+			eval_callback_pan = new AutoGCRoot( onCall );
+		    return alloc_bool( true );
+		}
+		DEFINE_PRIM( set_callback_pan , 1 );	
 
 		
 
