@@ -1,6 +1,9 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.enums.GestureTypes;
+import fr.hyperfiction.hypertouch.enums.SwipeDirections;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
+import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
 #if android
 import nme.JNI;
@@ -17,11 +20,9 @@ import nme.Lib;
  */
 class GestureSwipe extends AGesture{
 
-	public var enabled( default , _set_enabled ) : Bool;
-
+	#if android
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureSwipe';
-
-	private var _java_instance : Dynamic;
+	#end
 
 	#if mobile
 	private static var eval_callback_tap = Lib.load( "hypertouch" , "set_callback_swipe", 1);
@@ -51,21 +52,8 @@ class GestureSwipe extends AGesture{
 		* @private
 		* @return	void
 		*/
-		private function _set_enabled( b : Bool ) : Bool{
+		override private function _activate( ) : Void{
 
-			if( b )
-				_activate( );
-
-			return this.enabled = b;
-		}	
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _activate( ) : Void{
 			#if android
 			_android( );
 			#end	
@@ -73,6 +61,7 @@ class GestureSwipe extends AGesture{
 			#if cpp
 			eval_callback_tap( _onSwipe );
 			#end
+			
 		}
 
 		#if android
@@ -100,6 +89,46 @@ class GestureSwipe extends AGesture{
 		*/
 		private function _onSwipe( a : Array<Dynamic> ) : Void{
 			trace('onSwipe ::: '+a);
+			//SWIPE_DIRECTION_UP , vx , vy , dx , dy
+
+			var ev = new TransformGestureEvent( GESTURE_SWIPE , a[3] , a[4] , 0.0 , 0.0 );
+				ev.phase = ALL;
+				ev.direction = _get_swipe_direction( a[ 0 ] );
+			
+			#if android
+				ev.pressure = a[5];
+			#end
+
+			emit( ev , 0.0 , 0.0 );
+		}
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _get_swipe_direction( value : Int ) : SwipeDirections{
+
+			var res : SwipeDirections = null;
+			switch( value ){
+
+				case 1:
+					res = RIGHT;
+
+				case 2:
+					res = LEFT;
+
+				case 4:
+					res = UP;
+
+				case 8:
+					res = DOWN;
+
+			}
+
+			return res;
+
 		}
 
 	// -------o misc

@@ -1,4 +1,4 @@
-package fr.hyperfiction.hypertouch.events;
+package fr.hyperfiction.hypertouch.enums;
 
 /**
  * ...

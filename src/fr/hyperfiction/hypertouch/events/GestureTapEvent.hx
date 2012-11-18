@@ -1,6 +1,6 @@
 package fr.hyperfiction.hypertouch.events;
 
-import fr.hyperfiction.hypertouch.events.GesturePhases;
+import fr.hyperfiction.hypertouch.enums.GesturePhases;
 import nme.events.Event;
 
 /**

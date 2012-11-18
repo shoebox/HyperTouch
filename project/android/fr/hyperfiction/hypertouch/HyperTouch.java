@@ -4,7 +4,9 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Comparator;
 import org.haxe.nme.GameActivity;
 
 /**
@@ -63,6 +65,14 @@ class HyperTouch implements View.OnTouchListener{
 		public void add_gesture( View.OnTouchListener g ) {
 			trace("add_gesture ::: "+g);
 			gestures.add( g );
+
+			// Collections.sort(gestures, new Comparator<Object>(){
+			//      public int compare(Object o1, Object o2){
+			//          if(o1.prio == o2.prio)
+			//              return 0;
+			//          return o1.prio < o2.prio ? -1 : 1;
+			//      }
+			// });
 		}
 
 		/**
@@ -91,7 +101,6 @@ class HyperTouch implements View.OnTouchListener{
 
 	// -------o protected
 	
-		
 
 	// -------o misc
 		

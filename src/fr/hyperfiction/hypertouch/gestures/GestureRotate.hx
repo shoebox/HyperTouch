@@ -18,14 +18,14 @@ import nme.Lib;
  * ...
  * @author shoe[box]
  */
-class GesturePan extends AGesture{	
+class GestureRotate extends AGesture{	
 
 	#if android
-	private static inline var ANDROID_CLASS : String = 'fr/hyperfiction/hypertouch/GesturePan';
+	private static inline var ANDROID_CLASS : String = 'fr/hyperfiction/hypertouch/GestureRotation';
 	#end
 
 	#if mobile
-	private static var eval_callback_pan = Lib.load( "hypertouch" , "set_callback_pan", 1);
+	private static var eval_callback_rot = Lib.load( "hypertouch" , "set_callback_rot", 1);
 	#end
 
 	// -------o constructor
@@ -58,7 +58,7 @@ class GesturePan extends AGesture{
 			#end	
 
 			#if cpp
-			eval_callback_pan( _onPan );
+			eval_callback_rot( _onRot );
 			#end
 		}
 
@@ -71,7 +71,7 @@ class GesturePan extends AGesture{
 		* @return	void
 		*/
 		private function _android( ) : Void{
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GesturePan;');
+			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GestureRotation;');
 			_java_instance = f( );				
 		}
 
@@ -83,9 +83,9 @@ class GesturePan extends AGesture{
 		* @private
 		* @return	void
 		*/
-		private function _onPan( a : Array<Dynamic> ) : Void{
-			
-			var ev = new TransformGestureEvent( GESTURE_PAN , a[1] , a[2] , 1.0 , 1.0 , 1.0 );
+		private function _onRot( a : Array<Dynamic> ) : Void{
+
+			var ev = new TransformGestureEvent( GESTURE_ROTATE , a[1] , a[2] , 1.0 , 1.0 , a[3] * 180 / Math.PI );
 			
 			var id_phase = a[ 0 ];
 			var phase = START;
@@ -98,12 +98,11 @@ class GesturePan extends AGesture{
 				ev.phase = phase;
 			
 			#if android
-				ev.pressure = a[5];
+				ev.pressure = a[4];
 			#end
 
 			stage_emit( ev );
-			//onPan( iPhase , fx , fy , vx , vy , pressure );
-
+			
 		}
 
 	// -------o misc

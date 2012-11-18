@@ -39,6 +39,7 @@ AutoGCRoot *eval_callback_pan = 0;
 AutoGCRoot *eval_callback_pinch = 0;
 AutoGCRoot *eval_callback_swipe = 0;
 AutoGCRoot *eval_callback_tap = 0;
+AutoGCRoot *eval_callback_rot = 0;
 
 extern "C"{
 	
@@ -154,6 +155,25 @@ extern "C"{
     	val_call1( eval_callback_pan -> get( ) , args );       	
     }
 
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureRotation_onRot(
+																	JNIEnv * env, 
+																	jobject  obj ,
+																	jint phase,
+																	jfloat fx , 
+																	jfloat fy ,
+																	jfloat deg,
+																	jfloat pressure
+    															){
+    	
+    	value args = alloc_array( 5 );
+    	val_array_set_i( args , 0 , alloc_int( phase ) );
+    	val_array_set_i( args , 1 , alloc_float( fx ) );
+    	val_array_set_i( args , 2 , alloc_float( fy ) );
+    	val_array_set_i( args , 3 , alloc_float( deg ) );
+    	val_array_set_i( args , 4 , alloc_float( pressure ) );
+    	val_call1( eval_callback_rot -> get( ) , args );       	
+    }
+
     #endif
 }
 
@@ -198,6 +218,14 @@ extern "C"{
 		    return alloc_bool( true );
 		}
 		DEFINE_PRIM( set_callback_pan , 1 );	
+
+	//Pan callback
+		static value set_callback_rot( value onCall ){
+			printf("set_callback_rot");
+			eval_callback_rot = new AutoGCRoot( onCall );
+		    return alloc_bool( true );
+		}
+		DEFINE_PRIM( set_callback_rot , 1 );	
 
 		
 

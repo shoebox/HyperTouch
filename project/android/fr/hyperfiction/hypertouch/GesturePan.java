@@ -25,6 +25,8 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 	private VelocityTracker mVelocityTracker;
 	private int _fingers_count;
 	private int _taps_count;
+	private float _fx;
+	private float _fy;
 
 	static public native void onPan( 
 										int iPhase,
@@ -124,12 +126,14 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {  
 			_emitScroll( 
 							1,
-							e2.getX( ),
-							e2.getY( ),
+							e2.getX( ) - _fx,
+							e2.getY( ) - _fy,
 							mVelocityTracker.getXVelocity( ),
 							mVelocityTracker.getYVelocity( ),
 							e2.getPressure( )
 						);	
+			_fx = e2.getX( );
+			_fy = e2.getY( );
 			return false;
 		}
 
@@ -143,10 +147,12 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		*/
 		private void _startScroll( MotionEvent ev ){
 			_bScrolling = true;
+			_fx = ev.getX( );
+			_fy = ev.getY( );
 			_emitScroll( 
 							0,
-							ev.getX( ),
-							ev.getY( ),
+							0,
+							0,
 							mVelocityTracker.getXVelocity( ),
 							mVelocityTracker.getYVelocity( ),
 							ev.getPressure( )
@@ -163,12 +169,14 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 			_bScrolling = false;
 			_emitScroll( 
 							2,
-							ev.getX( ),
-							ev.getY( ),
+							ev.getX( ) - _fx,
+							ev.getY( ) - _fy,
 							mVelocityTracker.getXVelocity( ),
 							mVelocityTracker.getYVelocity( ),
 							ev.getPressure( )
 						);
+			_fx = ev.getX( );
+			_fy = ev.getY( );
 			//_emitScroll( 2 , 0 , 0 , mVelocityTracker.getXVelocity( ) , mVelocityTracker.getYVelocity( ) , ev.getX() , ev.getY( ) , ev.getPressure( 0 ) );
 		}
 

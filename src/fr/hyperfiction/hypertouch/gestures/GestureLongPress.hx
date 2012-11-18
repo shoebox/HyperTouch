@@ -1,5 +1,6 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.enums.GesturePhases;
 import fr.hyperfiction.hypertouch.events.GestureLongPressEvent;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 
@@ -19,11 +20,7 @@ import nme.Lib;
 
 class GestureLongPress extends AGesture{
 
-	public var enabled( default , _set_enabled ) : Bool;
-
 	#if android
-	private var _java_instance : Dynamic;
-
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureLongPress';
 	#end
 
@@ -81,29 +78,13 @@ class GestureLongPress extends AGesture{
 			emit( ev , fx , fy );
 		}
 
-
 		/**
 		* 
 		* 
 		* @private
 		* @return	void
 		*/
-		private function _set_enabled( b : Bool ) : Bool{
-
-			//TODO : Disable gesture
-			if( b )
-				_activate( );
-
-			return this.enabled = b;
-		}		
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _activate( ) : Void{
+		override private function _activate( ) : Void{
 			#if android
 			_android( );
 			#end	

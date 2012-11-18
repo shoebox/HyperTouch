@@ -19,14 +19,10 @@ import nme.Lib;
 
 class GestureTap extends AGesture{
 
-	public var enabled( default , _set_enabled ) : Bool;
-
 	private var _fingers_count : Int;
 	private var _taps_count : Int;
 
 	#if android
-	private var _java_instance : Dynamic;
-
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureTap';
 	#end
 
@@ -148,21 +144,7 @@ class GestureTap extends AGesture{
 		* @private
 		* @return	void
 		*/
-		private function _set_enabled( b : Bool ) : Bool{
-
-			if( b )
-				_activate( );
-
-			return this.enabled = b;
-		}		
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _activate( ) : Void{
+		override private function _activate( ) : Void{
 			#if android
 			_android( );
 			#end	

@@ -1,9 +1,12 @@
 package fr.hyperfiction.hypertouch;
 
+import fr.hyperfiction.hypertouch.enums.GestureTypes;
+import fr.hyperfiction.hypertouch.enums.SwipeDirections;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
 import fr.hyperfiction.hypertouch.gestures.GesturePan;
 import fr.hyperfiction.hypertouch.gestures.GesturePinch;
+import fr.hyperfiction.hypertouch.gestures.GestureRotate;
 import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
 
@@ -24,14 +27,6 @@ import nme.Lib;
  */
 
 class HyperTouch{
-
-	public static inline var GESTURE_TAP_1          : Int = 0;
-	public static inline var GESTURE_TAP_2          : Int = 1;
-	public static inline var GESTURE_TWO_FINGERS_TAP: Int = 2;
-	public static inline var GESTURE_LONG_PRESS     : Int = 3;
-	public static inline var GESTURE_SWIPE          : Int = 4;
-	public static inline var GESTURE_PINCH          : Int = 5;
-	public static inline var GESTURE_PAN            : Int = 6;
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -64,27 +59,52 @@ class HyperTouch{
 		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
 		*/
-		public function add( gesture : GestureTypes ) : Void {
+		public function add( type : GestureTypes ) : AGesture {
 			
-			switch( gesture ){
+			var gesture : AGesture = null;	
 
-				case TAP( fingers_count , taps_count ):
-					_add_tap_with( fingers_count , taps_count );
+			//
+				var value : Int;
+				switch( type ){
 
-				case LONGPRESS:
-					_add_long_press( );
+					case TAP( fingers_count , taps_count ):
+						value = _get_tap_code( fingers_count , taps_count );
 
-				case SWIPE:
-					_listen_for_swipe( );
+					default:
+						value = Type.enumIndex( type ) * 100;
 
-				case PINCH:
-					_listen_for_pinch( );
+				}
 
-				case PAN:
-					_listen_for_pan( );
+			//
+				if( !_hGestures.exists( value ) ){
+					
+					switch( type ){
 
-			}
-						
+						case TAP( fingers_count , taps_count ):
+							gesture = _add_tap_with( fingers_count , taps_count );
+
+						case LONGPRESS:
+							gesture = new GestureLongPress( );
+
+						case GESTURE_PAN:
+							gesture = new GesturePan( );
+
+						case GESTURE_ROTATE:
+							gesture = new GestureRotate( );
+
+						case GESTURE_SWIPE:
+							gesture = new GestureSwipe( );
+
+						case GESTURE_PINCH:
+							gesture = new GesturePinch( );
+
+					}
+
+					gesture.enabled = true;
+					_hGestures.set( value , gesture );
+				}
+
+			return gesture;
 		}
 
 	// -------o protected
@@ -154,58 +174,6 @@ class HyperTouch{
 		#end
 
 		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _listen_for_swipe( ) : Void{
-			
-			if( !_hGestures.exists( GESTURE_SWIPE ) ){
-
-				var g = new GestureSwipe( );
-					g.enabled = true;
-				_hGestures.set( GESTURE_SWIPE , g );
-
-			}
-
-		}
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _listen_for_pinch( ) : Void{
-			trace('_listen_for_pinch ::: ');
-			if( !_hGestures.exists( GESTURE_PINCH ) ){
-
-				var g = new GesturePinch( );
-					g.enabled = true;
-				_hGestures.set( GESTURE_PINCH , g );
-
-			}
-		}
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _listen_for_pan( ) : Void{
-			trace('_listen_for_pan');
-			if( !_hGestures.exists( GESTURE_PAN ) ){
-
-				var g = new GesturePan( );
-					g.enabled = true;
-				_hGestures.set( GESTURE_PAN , g );
-
-			}
-		}
-
-		/**
 		* Add a tap listener with the specified fingers count & taps count
 		* 
 		* @private
@@ -213,33 +181,16 @@ class HyperTouch{
 		* @param 	taps_count   : Taps count ( Int )
 		* @return	void
 		*/
-		private function _add_tap_with( fingers_count : Int , taps_count : Int = 1 ) : Void{
-
-			var value : Int = -1;
-			switch( taps_count ){
-
-				case 1:
-					if( fingers_count == 1 )
-						value = GESTURE_TAP_1;
-					else if( fingers_count == 2 )
-						value = GESTURE_TWO_FINGERS_TAP;
-
-
-				case 2:
-					value = GESTURE_TAP_2;
-
-				default:
-					trace('todo');
-
-			}
-
+		private function _add_tap_with( fingers_count : Int , taps_count : Int = 1 ) : AGesture{
+			
+			var value = _get_tap_code( fingers_count , taps_count );
+			var res : GestureTap = null;
 			if( !_hGestures.exists( value ) ){
-
-				var g = new GestureTap( fingers_count , taps_count );
-					g.enabled = true;
-				_hGestures.set( value , g );
-
-			}
+				res = new GestureTap( fingers_count , taps_count );
+				res.enabled = true;
+				_hGestures.set( value , res );
+			}			
+			return res;
 		}
 
 		/**
@@ -248,14 +199,8 @@ class HyperTouch{
 		* @private
 		* @return	void
 		*/
-		private function _add_long_press( ) : Void{
-			if( !_hGestures.exists( GESTURE_LONG_PRESS ) ){
-
-				var g = new GestureLongPress( );
-					g.enabled = true;
-				_hGestures.set( GESTURE_LONG_PRESS , g );
-
-			}
+		private function _get_tap_code( fingers_count : Int , taps_count : Int ) : Int{
+			return fingers_count * 5 + taps_count;
 		}
 
 	// -------o misc
@@ -289,12 +234,5 @@ class HyperTouch{
 		private static var __instance : HyperTouch = null;
 }
 
-enum GestureTypes{
 
-	TAP( fingers_count : Int , ?taps_count : Int );
-	LONGPRESS;
-	SWIPE;
-	PINCH;
-	PAN;
 
-}

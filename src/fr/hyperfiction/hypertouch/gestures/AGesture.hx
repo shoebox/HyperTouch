@@ -1,9 +1,11 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.enums.GesturePhases;
+
+import nme.Lib;
 import nme.display.InteractiveObject;
 import nme.events.Event;
 import nme.geom.Point;
-import nme.Lib;
 
 /**
  * ...
@@ -12,7 +14,15 @@ import nme.Lib;
 
 class AGesture{
 	
+	public var phase : GesturePhases;
+	public var enabled( default , _set_enabled ) : Bool;
+	public var prio : Float;
+
 	private var _pt : Point;
+
+	#if android
+	private var _java_instance : Dynamic;
+	#end
 
 	// -------o constructor
 		
@@ -24,6 +34,7 @@ class AGesture{
 		*/
 		public function new() {
 			_pt = new Point( );
+			prio = 0.0;
 		}
 	
 	// -------o public
@@ -47,7 +58,53 @@ class AGesture{
 				}
 			}
 
-			Lib.current.stage.dispatchEvent( gesture );
+			stage_emit( gesture );
+		}
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		public function stage_emit( gesture : Event ) : Void {
+			Lib.current.stage.dispatchEvent( gesture );						
+		}
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _set_enabled( b : Bool ) : Bool{
+
+			if( b )
+				_activate( );
+			else
+				_deactivate( );
+
+			return this.enabled = b;
+		}	
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _activate( ) : Void{
+
+		}
+
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		private function _deactivate( ) : Void{
+
 		}
 
 	// -------o protected
