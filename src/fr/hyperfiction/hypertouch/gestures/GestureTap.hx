@@ -1,5 +1,6 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.events.GestureTapEvent;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 
@@ -17,17 +18,13 @@ import nme.Lib;
  * @author shoe[box]
  */
 
-class GestureTap extends AGesture{
+@:build(org.shoebox.utils.NativeMirror.build( )) class GestureTap extends AGesture{
 
 	private var _fingers_count : Int;
 	private var _taps_count : Int;
 
 	#if android
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureTap';
-	#end
-
-	#if mobile
-	private static var eval_callback_tap = Lib.load( "hypertouch" , "set_callback_tap", 1);
 	#end
 
 	// -------o constructor
@@ -42,14 +39,28 @@ class GestureTap extends AGesture{
 			super( );
 			_fingers_count = iFingers;
 			_taps_count = iTaps;
-			#if mobile
-			eval_callback_tap( _on_tap_callback );
+			trace('constructor');
+			#if cpp
+			set_callback_tap( _on_tap_callback );
 			#end
 		}
 	
 	// -------o public
-				
-				
+		
+		#if cpp
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_tap( f : Array<Dynamic>->Void ) : Void {
+						
+		}		
+
+		#end
 
 	// -------o protected
 		
@@ -60,82 +71,38 @@ class GestureTap extends AGesture{
 		* @return	void
 		*/
 		private function _on_tap_callback( a : Array<Dynamic> ) : Void{
-			var fingers = a[ 0 ];
-			var taps = a[ 1 ];
-
-			switch( fingers ){
-
-				case 1:
-					if( taps == 1 )
-						Reflect.callMethod( this , _on_single_tap , a ); 
-					else
-						Reflect.callMethod( this , _on_double_tap , a ); 
-
-				case 2:
-					if( taps == 1 )
-						Reflect.callMethod( this , _on_two_fingers_tap , a );
-
-			}
+			trace("_on_tap_callback ::: "+a);
 			
-		}
 
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _on_single_tap(
-									iFingers  : Int,
-									iTaps     : Int,
-									iPhase    : Int , 
-									iPointerId: Int , 
-									fx        : Float , 
-									fy        : Float , 
-									fPressure : Float , 
-									fSizeX    : Float , 
-									fSizeY    : Float   
-								) : Void{
-			var ev = new GestureTapEvent( GestureTapEvent.TAP , iPhase , iPointerId , fx , fy , fPressure , fSizeX , fSizeY );
-			emit( ev , fx , fy );
-		}
+			var sType : String = switch( a[ 0 ] ){
 
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _on_double_tap( 
-											iFingers  : Int,
-											iTaps     : Int,
-											iPhase    : Int , 
-											iPointerId: Int , 
-											fx        : Float , fy : Float , 
-											fPressure : Float , 
-											fSizeX    : Float , fSizeY : Float   
-										) : Void{
-			var ev = new GestureTapEvent( GestureTapEvent.DOUBLE_TAP , iPhase , iPointerId , fx , fy , fPressure , fSizeX , fSizeY );
-			emit( ev , fx , fy );
-		}
+									case 1:
+										switch( a[ 1 ] ){
 
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _on_two_fingers_tap( 
-											iFingers  : Int,
-											iTaps     : Int,
-											iPhase    : Int , 
-											iPointerId: Int , 
-											fx        : Float , fy : Float , 
-											fPressure : Float , 
-											fSizeX    : Float , fSizeY : Float   
-										) : Void{
-			var ev = new GestureTapEvent( GestureTapEvent.TWO_FINGERS , iPhase , iPointerId , fx , fy , fPressure , fSizeX , fSizeY );
-			emit( ev , fx , fy );
+											case 1:
+												GestureTapEvent.TAP;
+											
+											case 2:
+												GestureTapEvent.DOUBLE_TAP;
+										}
+
+									case 2:
+										GestureTapEvent.TWO_FINGERS;
+								}
+			var ev : GestureTapEvent;
+
+			var fx : Float;
+			var fy : Float;
+
+			#if android
+			ev = new GestureTapEvent( sType , a[ 2 ] , a[ 3 ] , a[ 3 ] , a[ 4 ] , a[ 5 ] , a[ 6 ] , a[ 7 ] , a[ 8 ] );
+			#end
+
+			#if ios
+			ev = new GestureTapEvent( sType , a[ 2 ] , 0 , a[ 3 ] , a[ 4 ] );
+			#end
+			trace( ev );
+			emit( ev , ev.stageX , ev.stageY );
 		}
 
 		/**
@@ -145,25 +112,49 @@ class GestureTap extends AGesture{
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
+			trace("_activate");
 			#if android
 			_android( );
+			_java_instance = getInstance( _fingers_count , _taps_count );
 			#end	
+
+			#if ios
+			HyperTouch.HyperTouch_activate( 0 , 1 );
+			#end
 		}
+
+	// -------o iOS
+
+		#if ios
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function HyperTouch_activate( iCode : Int , iFingers : Int = 0  ) : Void {
+						
+		}
+
+		#end
+
+	// -------o JNI
 
 		#if android
 
 		/**
 		* 
 		* 
-		* @private
+		* @public
 		* @return	void
 		*/
-		private function _android( ) : Void{
-
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '(II)Lfr/hyperfiction/hypertouch/GestureTap;');
-			_java_instance = f( _fingers_count , _taps_count );
-				
+		@JNI
+		static public function getInstance( iFingers : Int , iTaps : Int ) : GestureTap {
+						
 		}
+
 
 		#end
 

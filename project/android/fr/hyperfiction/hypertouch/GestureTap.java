@@ -31,7 +31,7 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 										float fy , 
 										float fPressure , 
 										float fSizeX , 
-										float fSizeY 
+										float fSizeY
 									);
 	static {
 		System.loadLibrary( "hypertouch" ); 
@@ -134,10 +134,11 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		* @return	void
 		*/
 		private void _emit( final int iFingers , final int iTaps , final MotionEvent e ){
+			trace("emit");
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
 	                public void run() { 
-						onTap(
+	                	onTap(
 								iFingers,
 								iTaps,
 								e.getAction( ),

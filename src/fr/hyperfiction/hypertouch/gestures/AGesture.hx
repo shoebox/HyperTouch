@@ -71,6 +71,8 @@ class AGesture{
 			Lib.current.stage.dispatchEvent( gesture );						
 		}
 
+	// -------o protected
+
 		/**
 		* 
 		* 
@@ -107,7 +109,30 @@ class AGesture{
 
 		}
 
-	// -------o protected
+		/**
+		* 
+		* 
+		* @private
+		* @return	void
+		*/
+		inline private function _translate_phase( id : Int ) : GesturePhases{
+			var res : GesturePhases = ALL;
+
+			switch( id ){
+
+				case 0:
+					res = START;
+
+				case 1:
+					res = UPDATE;
+
+				case 2:
+					res = END;
+
+			}
+			return res;
+		}
+
 	
 		
 

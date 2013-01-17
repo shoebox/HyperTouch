@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<ndll name="hypertouch" if="mobile" />
-	<classpath name="src/" />
 	<java path="project/android" if="android"/>
-
+	
+	<ndll name="hypertouch" if="android" />
+	<ndll name="hypertouch" if="ios" />
+		
+	<classpath name="src/" />
 </project>

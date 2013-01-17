@@ -5,28 +5,12 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
-#if android
-import nme.JNI;
-#end
-
-#if cpp
-import cpp.Lib;
-import nme.Lib;
-#end
 
 /**
  * ...
  * @author shoe[box]
  */
-class GesturePan extends AGesture{	
-
-	#if android
-	private static inline var ANDROID_CLASS : String = 'fr/hyperfiction/hypertouch/GesturePan';
-	#end
-
-	#if mobile
-	private static var eval_callback_pan = Lib.load( "hypertouch" , "set_callback_pan", 1);
-	#end
+@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePan extends AGesture{	
 
 	// -------o constructor
 		
@@ -53,29 +37,20 @@ class GesturePan extends AGesture{
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
+
 			#if android
-			_android( );
+			_java_instance = getInstance( );
 			#end	
 
 			#if cpp
-			eval_callback_pan( _onPan );
+			set_callback_pan( _onPan );
 			#end
+
+			#if ios
+			HyperTouch.HyperTouch_activate( 3 , 1 );
+			#end
+
 		}
-
-		#if android
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _android( ) : Void{
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GesturePan;');
-			_java_instance = f( );				
-		}
-
-		#end	
 
 		/**
 		* 
@@ -84,7 +59,7 @@ class GesturePan extends AGesture{
 		* @return	void
 		*/
 		private function _onPan( a : Array<Dynamic> ) : Void{
-			
+			trace('onPan ::: '+a);
 			var ev = new TransformGestureEvent( GESTURE_PAN , a[1] , a[2] , 1.0 , 1.0 , 1.0 );
 			
 			var id_phase = a[ 0 ];
@@ -107,5 +82,34 @@ class GesturePan extends AGesture{
 		}
 
 	// -------o misc
-	
+
+	// -------o JNI
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI
+		public function getInstance( ) : GesturePan{
+			
+		}
+
+	// -------o CPP
+		
+		#if cpp
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_pan( f : Array<Dynamic>->Void ) : Void {
+						
+		}
+
+		#end
 }

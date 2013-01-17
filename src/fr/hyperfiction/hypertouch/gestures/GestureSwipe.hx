@@ -1,5 +1,6 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.enums.GestureTypes;
 import fr.hyperfiction.hypertouch.enums.SwipeDirections;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
@@ -18,14 +19,10 @@ import nme.Lib;
  * ...
  * @author shoe[box]
  */
-class GestureSwipe extends AGesture{
+@:build(org.shoebox.utils.NativeMirror.build( )) class GestureSwipe extends AGesture{
 
 	#if android
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureSwipe';
-	#end
-
-	#if mobile
-	private static var eval_callback_tap = Lib.load( "hypertouch" , "set_callback_swipe", 1);
 	#end
 
 	// -------o constructor
@@ -59,7 +56,11 @@ class GestureSwipe extends AGesture{
 			#end	
 
 			#if cpp
-			eval_callback_tap( _onSwipe );
+			set_callback_swipe( _onSwipe );
+			#end
+
+			#if ios
+			HyperTouch.HyperTouch_activate( 6 , 1 );
 			#end
 			
 		}
@@ -89,16 +90,23 @@ class GestureSwipe extends AGesture{
 		*/
 		private function _onSwipe( a : Array<Dynamic> ) : Void{
 			trace('onSwipe ::: '+a);
-			//SWIPE_DIRECTION_UP , vx , vy , dx , dy
 
-			var ev = new TransformGestureEvent( GESTURE_SWIPE , a[3] , a[4] , 0.0 , 0.0 );
-				ev.phase = ALL;
-				ev.direction = _get_swipe_direction( a[ 0 ] );
-			
+			var ev : TransformGestureEvent = null;
+
 			#if android
+				ev = new TransformGestureEvent( GESTURE_SWIPE , 0 , 0 );
+				ev.direction = _get_swipe_direction( a[ 1 ] );
 				ev.pressure = a[5];
 			#end
 
+			#if ios
+				ev = new TransformGestureEvent( GESTURE_SWIPE , a[3] , a[4] );
+				ev.direction = _get_swipe_direction( a[ 0 ] );
+			#end
+			
+			//
+				ev.phase = ALL;
+			
 			emit( ev , 0.0 , 0.0 );
 		}
 
@@ -132,5 +140,24 @@ class GestureSwipe extends AGesture{
 		}
 
 	// -------o misc
-	
+		
+	// -------o iOS
+
+	// -------o CPP
+
+		#if cpp
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_swipe( f : Array<Dynamic>->Void ) : Void {
+						
+		}
+
+		#end
+
 }

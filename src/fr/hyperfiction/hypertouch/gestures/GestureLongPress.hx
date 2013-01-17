@@ -1,5 +1,6 @@
 package fr.hyperfiction.hypertouch.gestures;
 
+import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.enums.GesturePhases;
 import fr.hyperfiction.hypertouch.events.GestureLongPressEvent;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
@@ -18,14 +19,10 @@ import nme.Lib;
  * @author shoe[box]
  */
 
-class GestureLongPress extends AGesture{
+@:build(org.shoebox.utils.NativeMirror.build( )) class GestureLongPress extends AGesture{
 
 	#if android
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureLongPress';
-	#end
-
-	#if mobile
-	private static var eval_callback_long_press = Lib.load( "hypertouch" , "set_callback_long_press", 1);
 	#end
 
 	// -------o constructor
@@ -38,8 +35,8 @@ class GestureLongPress extends AGesture{
 		*/
 		public function new( ) {
 			super( );
-			#if mobile
-			eval_callback_long_press( _onLongPress );
+			#if cpp
+			set_callback_long_press( _onLongPress );
 			#end
 		}
 	
@@ -56,6 +53,7 @@ class GestureLongPress extends AGesture{
 		* @return	void
 		*/
 		private function _onLongPress( a : Array<Dynamic> ) : Void{
+			trace("_onLongPress :::: "+a);
 			Reflect.callMethod( this , _emit , a ); 
 		}
 
@@ -85,23 +83,51 @@ class GestureLongPress extends AGesture{
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
+
 			#if android
-			_android( );
+			_java_instance = getInstance( );
 			#end	
+
+			#if ios
+			HyperTouch.HyperTouch_activate( 7 , 1 );
+			#end
+
 		}
 
+
+	// -------o Android
+		
 		#if android
 
 		/**
-		* Android activation of the gesture
 		* 
-		* @private
+		* 
+		* @public
 		* @return	void
 		*/
-		private function _android( ) : Void{
+		static public function getInstance( ) : GestureLongPress {
+						
+		}
 
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GestureLongPress;');
-			_java_instance = f( );				
+		#end
+
+	// -------o iOS
+
+
+
+	// -------o CPP
+
+		#if cpp
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_long_press( f : Array<Dynamic>->Void ) : Void {
+						
 		}
 
 		#end

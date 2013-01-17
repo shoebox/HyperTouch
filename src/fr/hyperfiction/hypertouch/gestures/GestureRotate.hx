@@ -18,16 +18,13 @@ import nme.Lib;
  * ...
  * @author shoe[box]
  */
-class GestureRotate extends AGesture{	
+@:build(org.shoebox.utils.NativeMirror.build( )) class GestureRotate extends AGesture{	
 
 	#if android
 	private static inline var ANDROID_CLASS : String = 'fr/hyperfiction/hypertouch/GestureRotation';
 	#end
 
-	#if mobile
-	private static var eval_callback_rot = Lib.load( "hypertouch" , "set_callback_rot", 1);
-	#end
-
+	
 	// -------o constructor
 		
 		/**
@@ -53,13 +50,19 @@ class GestureRotate extends AGesture{
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
+			
+			#if cpp
+			set_callback_rot( _onRot );
+			#end
+
 			#if android
-			_android( );
+			_java_instance = getInstance( );
 			#end	
 
-			#if cpp
-			eval_callback_rot( _onRot );
+			#if ios
+			HyperTouch.HyperTouch_activate( 5 , 1 );
 			#end
+			
 		}
 
 		#if android
@@ -84,18 +87,9 @@ class GestureRotate extends AGesture{
 		* @return	void
 		*/
 		private function _onRot( a : Array<Dynamic> ) : Void{
-
-			var ev = new TransformGestureEvent( GESTURE_ROTATE , a[1] , a[2] , 1.0 , 1.0 , a[3] * 180 / Math.PI );
 			
-			var id_phase = a[ 0 ];
-			var phase = START;
-			if( id_phase == 1 )
-				phase = UPDATE;
-			else if( id_phase == 2 )
-				phase = END;
-
-			//
-				ev.phase = phase;
+			var ev = new TransformGestureEvent( GESTURE_ROTATE , a[1] , a[2] , 1.0 , 1.0 , a[3] * 180 / Math.PI );
+				ev.phase = _translate_phase( a[ 0 ] );
 			
 			#if android
 				ev.pressure = a[4];
@@ -106,5 +100,37 @@ class GestureRotate extends AGesture{
 		}
 
 	// -------o misc
-	
+
+	// -------o JNI
+
+		#if android
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		static public function getInstance( ) : GestureRotation {
+						
+		}
+
+		#end
+
+	// -------o CPP
+		
+		#if cpp
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_rot( f : Array<Dynamic>->Void ) : Void {
+						
+		}
+
+		#end
 }

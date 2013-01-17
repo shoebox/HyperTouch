@@ -26,15 +26,13 @@ import nme.Lib;
  * @author shoe[box]
  */
 
-class HyperTouch{
+@:build(org.shoebox.utils.NativeMirror.build( )) class HyperTouch{
 
 	private var _hGestures : IntHash<AGesture>;
 
 	#if android
-	private var _f_disable    : Dynamic;
-	private var _f_enable     : Dynamic;
-	private var _java_instance: Dynamic;
-	private var _timer        : Timer;
+	private var _java_instance	: Dynamic;
+	private var _timer			: Timer;
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.HyperTouch';
 	#end
 
@@ -47,11 +45,12 @@ class HyperTouch{
 		* @return	void
 		*/
 		private function new() {
+			trace('constructor');
 			_init( );
 		}
 	
 	// -------o public
-				
+			
 		/**
 		* Adding a new listener for the <code>GestureType</code> gesture
 		* 
@@ -121,6 +120,10 @@ class HyperTouch{
 			#if android
 			nme.Lib.current.stage.addEventListener( Event.DEACTIVATE , _onDeactivate , false );
 			#end
+
+			#if ios
+			HyperTouch_init( );
+			#end
 		}
 
 		#if android
@@ -139,16 +142,11 @@ class HyperTouch{
 					_timer.stop( );
 
 			//Instance of the HyperTouch java class
-				if( _java_instance == null ){
-					var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/HyperTouch;');
-					_java_instance = f( );
-				}
+				if( _java_instance == null )
+					_java_instance = getJNIInstance( );				
 
 			//Calling the disable function
-				if( _f_disable == null )
-					_f_disable = JNI.createMemberMethod( ANDROID_CLASS , 'disable' , '()V' );
-					_f_disable( _java_instance );
-
+				disable( _java_instance );
 				nme.Lib.current.stage.addEventListener( Event.ACTIVATE , _onActivate , false );
 		}
 
@@ -161,12 +159,11 @@ class HyperTouch{
 		*/
 		private function _onActivate( _ ) : Void{
 			trace('_onActivate');
-			if( _f_enable == null )
-				_f_enable = JNI.createMemberMethod( ANDROID_CLASS , 'enable' , '()V' );
 			
 			//Waiting for the GLSurfaceView reinitialization
+			//TODO : Temporary work around
 				_timer = Timer.delay( function( ){
-											_f_enable( _java_instance );
+												enable( _java_instance );
 											} , 10 );
 
 		}
@@ -202,6 +199,74 @@ class HyperTouch{
 		private function _get_tap_code( fingers_count : Int , taps_count : Int ) : Int{
 			return fingers_count * 5 + taps_count;
 		}
+
+
+	// -------o iOS
+
+		#if ios
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function HyperTouch_init( ) : Void {
+						
+		}
+		
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		static public function HyperTouch_activate( iCode : Int , iFingers : Int = 0 ) : Void {
+						
+		}
+
+		#end
+
+	// -------o android
+
+		#if android
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI
+		public function enable( java_instance : Dynamic ) : Void {
+
+		}
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI
+		public function disable( java_instance : Dynamic ) : Void {
+						
+		}
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI("fr.hyperfiction.hypertouch.HyperTouch","getInstance")
+		static public function getJNIInstance( ) : HyperTouch {
+						
+		}
+
+		#end
 
 	// -------o misc
 		

@@ -37,9 +37,9 @@ class GestureTapEvent extends Event{
 								iPointerId: Int , 
 								stageX    : Float , 
 								stageY    : Float , 
-								fPressure : Float , 
-								sizeX     : Float , 
-								sizeY     : Float   
+								fPressure : Float = -1 , 
+								sizeX     : Float = -1 , 
+								sizeY     : Float = -1   
 							 ) {
 			super( type );
 			this.iPhase     = iPhase;

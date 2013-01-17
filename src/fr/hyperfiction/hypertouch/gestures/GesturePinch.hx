@@ -17,13 +17,9 @@ import nme.Lib;
  * ...
  * @author shoe[box]
  */
-class GesturePinch extends AGesture{
+@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePinch extends AGesture{
 
 	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GesturePinch';
-
-	#if mobile
-	private static var eval_callback_pinch = Lib.load( "hypertouch" , "set_callback_pinch", 1);
-	#end
 
 	// -------o constructor
 		
@@ -35,6 +31,7 @@ class GesturePinch extends AGesture{
 		*/
 		public function new() {
 			super( );
+
 		}
 	
 	// -------o public
@@ -50,31 +47,20 @@ class GesturePinch extends AGesture{
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
+
 			#if android
-			_android( );
+			_java_instance = getInstance( );
 			#end	
 
-			#if mobile
-			eval_callback_pinch( _onPinch );
+			#if cpp
+			set_callback_pinch( _onPinch );
+			#end
+
+			#if ios
+			HyperTouch.HyperTouch_activate( 4 , 1 );
 			#end
 
 		}
-
-		#if android
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _android( ) : Void{
-			trace('_android');
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GesturePinch;');
-			_java_instance = f( );				
-		}
-
-		#end	
 
 		/**
 		* 
@@ -83,19 +69,42 @@ class GesturePinch extends AGesture{
 		* @return	void
 		*/
 		private function _onPinch( a : Array<Dynamic> ) : Void{
-			//trace('onPinch ::: '+a);
-
-			var ev = new TransformGestureEvent( GESTURE_PINCH , a[0] , a[1] , a[2] , a[3] );
-				ev.phase = ALL;
 			
-			#if android
-				//ev.pressure = a[5];
-			#end
-
+			var ev : TransformGestureEvent = new TransformGestureEvent( GESTURE_PINCH , a[ 1 ] , a[ 2 ] , a[ 3 ] , a[ 3 ] );
+				ev.phase = _translate_phase( a[ 0 ] );
 			stage_emit( ev );
-
+			
 		}
 
 	// -------o misc
-	
+
+	// -------o Android
+
+		#if android
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI
+		static public function getInstance( ) : GesturePinch {
+						
+		}
+
+		#end
+
+	// -------o CPP
+		
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@CPP("hypertouch")
+		public function set_callback_pinch( f : Array<Dynamic>->Void ) : Void {
+						
+		}
 }

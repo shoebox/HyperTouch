@@ -22,6 +22,7 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 	final private ScaleGestureDetector oPinchGesture;
 	
 	static public native void onPinch( 
+											int iPhase,
 											float dx , 
 											float dy , 
 											float scaleX,
@@ -61,6 +62,7 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 				new Runnable(){
 	                public void run() { 
 						onPinch( 
+								0,
 								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
 								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
 								oPinchGesture.getScaleFactor( ),
