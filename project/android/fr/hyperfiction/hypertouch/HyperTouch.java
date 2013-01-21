@@ -14,7 +14,7 @@ import org.haxe.nme.GameActivity;
  * @author shoe[box]
  */
 
-class HyperTouch implements View.OnTouchListener{
+public class HyperTouch implements View.OnTouchListener{
 
 	public static GLSurfaceView mSurface;
 
