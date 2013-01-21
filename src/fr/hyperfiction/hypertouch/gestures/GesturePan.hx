@@ -59,31 +59,22 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		* @return	void
 		*/
 		private function _onPan( a : Array<Dynamic> ) : Void{
-			trace('onPan ::: '+a);
 			var ev = new TransformGestureEvent( GESTURE_PAN , a[1] , a[2] , 1.0 , 1.0 , 1.0 );
-			
-			var id_phase = a[ 0 ];
-			var phase = START;
-			if( id_phase == 1 )
-				phase = UPDATE;
-			else if( id_phase == 2 )
-				phase = END;
-
-			//
-				ev.phase = phase;
+				ev.phase = _translate_phase( a[ 0 ] );
 			
 			#if android
 				ev.pressure = a[5];
 			#end
 
 			stage_emit( ev );
-			//onPan( iPhase , fx , fy , vx , vy , pressure );
-
+	
 		}
 
 	// -------o misc
 
 	// -------o JNI
+
+		#if android
 
 		/**
 		* 
@@ -95,6 +86,8 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		public function getInstance( ) : GesturePan{
 			
 		}
+
+		#end
 
 	// -------o CPP
 		

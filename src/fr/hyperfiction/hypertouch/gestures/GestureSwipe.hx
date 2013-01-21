@@ -6,24 +6,11 @@ import fr.hyperfiction.hypertouch.enums.SwipeDirections;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
-#if android
-import nme.JNI;
-#end
-
-#if cpp
-import cpp.Lib;
-import nme.Lib;
-#end
-
 /**
  * ...
  * @author shoe[box]
  */
 @:build(org.shoebox.utils.NativeMirror.build( )) class GestureSwipe extends AGesture{
-
-	#if android
-	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureSwipe';
-	#end
 
 	// -------o constructor
 		
@@ -52,7 +39,7 @@ import nme.Lib;
 		override private function _activate( ) : Void{
 
 			#if android
-			_android( );
+			_java_instance = getInstance( );
 			#end	
 
 			#if cpp
@@ -65,23 +52,6 @@ import nme.Lib;
 			
 		}
 
-		#if android
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _android( ) : Void{
-			trace('_android');
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GestureSwipe;');
-			_java_instance = f( );
-				
-		}
-
-		#end	
-
 		/**
 		* 
 		* 
@@ -89,8 +59,7 @@ import nme.Lib;
 		* @return	void
 		*/
 		private function _onSwipe( a : Array<Dynamic> ) : Void{
-			trace('onSwipe ::: '+a);
-
+			
 			var ev : TransformGestureEvent = null;
 
 			#if android
@@ -141,7 +110,22 @@ import nme.Lib;
 
 	// -------o misc
 		
-	// -------o iOS
+	// -------o JNI
+
+		#if android
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		@JNI
+		static public function getInstance( ) : GestureSwipe {
+						
+		}
+
+		#end
 
 	// -------o CPP
 

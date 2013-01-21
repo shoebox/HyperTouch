@@ -6,7 +6,7 @@ import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
 import fr.hyperfiction.hypertouch.gestures.GesturePan;
 import fr.hyperfiction.hypertouch.gestures.GesturePinch;
-import fr.hyperfiction.hypertouch.gestures.GestureRotate;
+import fr.hyperfiction.hypertouch.gestures.GestureRotation;
 import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
 
@@ -89,7 +89,7 @@ import nme.Lib;
 							gesture = new GesturePan( );
 
 						case GESTURE_ROTATE:
-							gesture = new GestureRotate( );
+							gesture = new GestureRotation( );
 
 						case GESTURE_SWIPE:
 							gesture = new GestureSwipe( );

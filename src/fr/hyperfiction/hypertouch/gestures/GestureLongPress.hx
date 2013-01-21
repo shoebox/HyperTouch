@@ -5,25 +5,12 @@ import fr.hyperfiction.hypertouch.enums.GesturePhases;
 import fr.hyperfiction.hypertouch.events.GestureLongPressEvent;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 
-#if android
-import nme.JNI;
-#end
-
-#if cpp
-import cpp.Lib;
-import nme.Lib;
-#end
-
 /**
  * ...
  * @author shoe[box]
  */
 
 @:build(org.shoebox.utils.NativeMirror.build( )) class GestureLongPress extends AGesture{
-
-	#if android
-	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GestureLongPress';
-	#end
 
 	// -------o constructor
 		
@@ -105,6 +92,7 @@ import nme.Lib;
 		* @public
 		* @return	void
 		*/
+		@JNI
 		static public function getInstance( ) : GestureLongPress {
 						
 		}

@@ -5,26 +5,12 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
-#if android
-import nme.JNI;
-#end
-
-#if cpp
-import cpp.Lib;
-import nme.Lib;
-#end
-
 /**
  * ...
  * @author shoe[box]
  */
-@:build(org.shoebox.utils.NativeMirror.build( )) class GestureRotate extends AGesture{	
+@:build(org.shoebox.utils.NativeMirror.build( )) class GestureRotation extends AGesture{	
 
-	#if android
-	private static inline var ANDROID_CLASS : String = 'fr/hyperfiction/hypertouch/GestureRotation';
-	#end
-
-	
 	// -------o constructor
 		
 		/**
@@ -65,21 +51,6 @@ import nme.Lib;
 			
 		}
 
-		#if android
-
-		/**
-		* 
-		* 
-		* @private
-		* @return	void
-		*/
-		private function _android( ) : Void{
-			var f = JNI.createStaticMethod( ANDROID_CLASS , 'getInstance' , '()Lfr/hyperfiction/hypertouch/GestureRotation;');
-			_java_instance = f( );				
-		}
-
-		#end	
-
 		/**
 		* 
 		* 
@@ -111,8 +82,8 @@ import nme.Lib;
 		* @public
 		* @return	void
 		*/
-		static public function getInstance( ) : GestureRotation {
-						
+		@JNI
+		static public function getInstance( ) : GestureRotation {	
 		}
 
 		#end
@@ -128,9 +99,8 @@ import nme.Lib;
 		* @return	void
 		*/
 		@CPP("hypertouch")
-		public function set_callback_rot( f : Array<Dynamic>->Void ) : Void {
-						
+		public function set_callback_rot( f : Array<Dynamic>->Void ) : Void {						
 		}
-
+		
 		#end
 }

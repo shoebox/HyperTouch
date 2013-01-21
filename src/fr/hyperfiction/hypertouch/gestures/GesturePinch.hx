@@ -4,22 +4,11 @@ import fr.hyperfiction.hypertouch.enums.GestureTypes;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
-#if android
-import nme.JNI;
-#end
-
-#if cpp
-import cpp.Lib;
-import nme.Lib;
-#end
-
 /**
  * ...
  * @author shoe[box]
  */
 @:build(org.shoebox.utils.NativeMirror.build( )) class GesturePinch extends AGesture{
-
-	private static inline var ANDROID_CLASS : String = 'fr.hyperfiction.hypertouch.GesturePinch';
 
 	// -------o constructor
 		
@@ -97,6 +86,8 @@ import nme.Lib;
 
 	// -------o CPP
 		
+		#if cpp
+
 		/**
 		* 
 		* 
@@ -107,4 +98,6 @@ import nme.Lib;
 		public function set_callback_pinch( f : Array<Dynamic>->Void ) : Void {
 						
 		}
+
+		#end
 }

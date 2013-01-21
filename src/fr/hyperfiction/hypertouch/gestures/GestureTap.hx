@@ -89,19 +89,18 @@ import nme.Lib;
 									case 2:
 										GestureTapEvent.TWO_FINGERS;
 								}
-			var ev : GestureTapEvent;
+			var ev : GestureTapEvent = null;
 
 			var fx : Float;
 			var fy : Float;
 
 			#if android
-			ev = new GestureTapEvent( sType , a[ 2 ] , a[ 3 ] , a[ 3 ] , a[ 4 ] , a[ 5 ] , a[ 6 ] , a[ 7 ] , a[ 8 ] );
+			ev = new GestureTapEvent( sType , a[ 2 ] , a[ 3 ] , a[ 4 ] , a[ 5 ] , a[ 6 ] , a[ 7 ] , a[ 8 ] );
 			#end
 
 			#if ios
 			ev = new GestureTapEvent( sType , a[ 2 ] , 0 , a[ 3 ] , a[ 4 ] );
 			#end
-			trace( ev );
 			emit( ev , ev.stageX , ev.stageY );
 		}
 
@@ -114,7 +113,6 @@ import nme.Lib;
 		override private function _activate( ) : Void{
 			trace("_activate");
 			#if android
-			_android( );
 			_java_instance = getInstance( _fingers_count , _taps_count );
 			#end	
 
@@ -134,8 +132,7 @@ import nme.Lib;
 		* @return	void
 		*/
 		@CPP("hypertouch")
-		public function HyperTouch_activate( iCode : Int , iFingers : Int = 0  ) : Void {
-						
+		public function HyperTouch_activate( iCode : Int , iFingers : Int = 0  ) : Void {						
 		}
 
 		#end
@@ -151,10 +148,8 @@ import nme.Lib;
 		* @return	void
 		*/
 		@JNI
-		static public function getInstance( iFingers : Int , iTaps : Int ) : GestureTap {
-						
+		static public function getInstance( iFingers : Int , iTaps : Int ) : GestureTap {						
 		}
-
 
 		#end
 
