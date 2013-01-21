@@ -1,4 +1,5 @@
 h1. HyperTouch: 
+
 HyperTouch is a native extension for Haxe / NME to handle native gestures on your Android & iOS devices.
 
 h3. Gestures currently supported are:
@@ -19,20 +20,18 @@ h3. First include the path to the HyperTouch folder in your NMML project file.
 h3. Adding listeners :
 
 <pre><code>
+var hyp = HyperTouch.getInstance( );
+	hyp.add( TAP( 1 , 1 ));//Single Tap
+	hyp.add( TAP( 2 , 1 ));//Two Fingers Taps
+	hyp.add( GESTURE_SWIPE );//Swipe Gesture
+( ... )
 
-
-var 	hyp = HyperTouch.getInstance( );
-		hyp.add( TAP( 1 , 1 ));//Single Tap
-		hyp.add( TAP( 2 , 1 ));//Two Fingers Taps
-		hyp.add( GESTURE_SWIPE );//Swipe Gesture
-		( ... )
-
-The event are for now dispatched on the current stage. 
+//The event are for now dispatched on the current stage. 
 Lib.current.stage.addEventListener( TransformGestureEvent.GESTURE_SWIPE , _onSwipe );
-
 </code></pre>
 
 h3. Nota:
+
 Some events value are specifics to some plateforms ( pressure by example which is android only ).
 
 h2. TODO:
