@@ -24,9 +24,9 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 	private int _taps_count;
 
 	//Perhaps not the better way to detect a Swipe in Android
-		private static final int SWIPE_MIN_DISTANCE = 120;
-		private static final int SWIPE_MAX_OFF_PATH = 250;
-		private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+		private static final int SWIPE_MIN_DISTANCE			= 150;
+		private static final int SWIPE_MAX_OFF_PATH			= 250;
+		private static final int SWIPE_THRESHOLD_VELOCITY	= 200;
 
 	//Directions codes for Haxe Callback
 		final static int SWIPE_DIRECTION_RIGHT = 1;
@@ -154,7 +154,7 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		* @return	void
 		*/
 		private void _swipe( final int dir , final float vx , final float vy , final float dx , final float dy ){
-			Log.i( TAG , "onSwipe ::: "+dir);
+			
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
 	                public void run() { 
