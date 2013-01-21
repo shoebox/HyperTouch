@@ -198,7 +198,7 @@ using namespace Hyperfiction;
 #ifdef ANDROID
 extern "C"{
 
-	JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureTap_onTap(
+	JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GestureTap_onTap(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint iFingers,
@@ -227,7 +227,7 @@ extern "C"{
     }
 
 //
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureLongPress_onLongPress(
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GestureLongPress_onLongPress(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint iPhase,
@@ -250,7 +250,7 @@ extern "C"{
     }
 
 //
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureSwipe_onSwipe(
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GestureSwipe_onSwipe(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint dir,
@@ -268,7 +268,7 @@ extern "C"{
       	val_call1( eval_callback_swipe -> get( ) , args ); 
     }
 
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GesturePinch_onPinch(
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GesturePinch_onPinch(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint iPhase,
@@ -287,7 +287,7 @@ extern "C"{
       	val_call1( eval_callback_pinch -> get( ) , args );       	
     }
 
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GesturePan_onPan(
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GesturePan_onPan(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint phase,
@@ -308,7 +308,7 @@ extern "C"{
     	val_call1( eval_callback_pan -> get( ) , args );       	
     }
 
-    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_GestureRotation_onRot(
+    JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GestureRotation_onRot(
 																	JNIEnv * env, 
 																	jobject  obj ,
 																	jint phase,
