@@ -64,7 +64,6 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 			var ev : TransformGestureEvent = null;
 
 			#if android
-				trace("onSwipe ::: "+a);
 				ev = new TransformGestureEvent( GESTURE_SWIPE , 0 , 0 );
 				ev.direction = _get_swipe_direction( a[ 0 ] );
 				ev.pressure = a[5];
