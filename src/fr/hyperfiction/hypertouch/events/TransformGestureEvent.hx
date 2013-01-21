@@ -28,9 +28,10 @@ class TransformGestureEvent extends Event{
 	public var phase : GesturePhases;
 	public var direction : SwipeDirections;
 
-	public static inline var GESTURE_PINCH  : String = 'GESTURE_PINCH';
-	public static inline var GESTURE_PAN    : String = 'GESTURE_PAN';
-	public static inline var GESTURE_ROTATE : String = 'GESTURE_ROTATE';
+	public static inline var GESTURE_PINCH	: String = 'GESTURE_PINCH';
+	public static inline var GESTURE_PAN	: String = 'GESTURE_PAN';
+	public static inline var GESTURE_ROTATE	: String = 'GESTURE_ROTATE';
+	public static inline var GESTURE_SWIPE	: String = 'GESTURE_SWIPE';
 
 	// -------o constructor
 		
