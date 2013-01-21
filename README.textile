@@ -1,0 +1,74 @@
+h1. HyperTouch: 
+HyperTouch is a native extension for Haxe / NME to handle native gestures on your Android & iOS devices.
+
+h3. Gestures currently supported are:
+- LongPress
+- Pan
+- Pinch
+- Rotation
+- Swipes
+- Taps ( Simple / Double / Two Fingers )
+
+h2. Getting started
+
+h3. First include the path to the HyperTouch folder in your NMML project file.
+
+<pre><code><include path="extensions/hypertouch"/></code></pre>
+( Will be soon on haxelib )
+
+h3. Adding listeners :
+
+<pre><code>
+
+
+var 	hyp = HyperTouch.getInstance( );
+		hyp.add( TAP( 1 , 1 ));//Single Tap
+		hyp.add( TAP( 2 , 1 ));//Two Fingers Taps
+		hyp.add( GESTURE_SWIPE );//Swipe Gesture
+		( ... )
+
+The event are for now dispatched on the current stage. 
+Lib.current.stage.addEventListener( TransformGestureEvent.GESTURE_SWIPE , _onSwipe );
+
+</code></pre>
+
+h3. Nota:
+Some events value are specifics to some plateforms ( pressure by example which is android only ).
+
+h2. TODO:
+
+- iOS rewriting & optimization
+- iOS velocity support
+
+h3. Tested on Devices :
+
+Android:
+- Nexus One 2.3.6
+- Nexus 4 4.2.1
+- Motorola Xoom 4.1.1
+- Galaxy Nexus 4.0
+
+iOS:
+- iPad 1 & 2
+- iPod 2G
+- iPhone 4G
+
+h3. Twitter 
+
+http://twitter.com/shoe_box
+
+h3. Made at Hyperfiction 
+
+( www.hyperfiction.fr )
+
+h2. License
+
+The MIT License
+
+Copyright (c) 2012 Hyperfiction / shoebox
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rightsto use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
