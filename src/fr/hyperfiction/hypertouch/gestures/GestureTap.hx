@@ -39,10 +39,7 @@ import nme.Lib;
 			super( );
 			_fingers_count = iFingers;
 			_taps_count = iTaps;
-			trace('constructor');
-			#if cpp
-			set_callback_tap( _on_tap_callback );
-			#end
+			trace('constructor');			
 		}
 	
 	// -------o public
@@ -112,6 +109,11 @@ import nme.Lib;
 		*/
 		override private function _activate( ) : Void{
 			trace("_activate");
+
+			#if cpp
+			set_callback_tap( _on_tap_callback );
+			#end
+			
 			#if android
 			_java_instance = getInstance( _fingers_count , _taps_count );
 			#end	

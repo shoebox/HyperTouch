@@ -22,9 +22,6 @@ import fr.hyperfiction.hypertouch.gestures.AGesture;
 		*/
 		public function new( ) {
 			super( );
-			#if cpp
-			set_callback_long_press( _onLongPress );
-			#end
 		}
 	
 	// -------o public
@@ -71,6 +68,10 @@ import fr.hyperfiction.hypertouch.gestures.AGesture;
 		*/
 		override private function _activate( ) : Void{
 
+			#if cpp
+			set_callback_long_press( _onLongPress );
+			#end
+			
 			#if android
 			_java_instance = getInstance( );
 			#end	

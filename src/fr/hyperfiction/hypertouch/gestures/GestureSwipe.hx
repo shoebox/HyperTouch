@@ -38,13 +38,14 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		*/
 		override private function _activate( ) : Void{
 
-			#if android
-			_java_instance = getInstance( );
-			#end	
-
 			#if cpp
 			set_callback_swipe( _onSwipe );
 			#end
+
+			#if android
+			_java_instance = getInstance( );
+			trace("_java_instance ;;; "+_java_instance);
+			#end				
 
 			#if ios
 			HyperTouch.HyperTouch_activate( 6 , 1 );
