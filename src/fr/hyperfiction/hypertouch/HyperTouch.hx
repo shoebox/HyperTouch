@@ -24,7 +24,9 @@ import cpp.Lib;
 import nme.Lib;
 #end
 
+#if signal
 import org.shoebox.utils.system.Signal1;
+#end
 
 /**
  * ...
@@ -33,7 +35,9 @@ import org.shoebox.utils.system.Signal1;
 
 @:build(org.shoebox.utils.NativeMirror.build( )) class HyperTouch extends EventDispatcher{
 
+	#if signal
 	static public var onTransformGesture : Signal1<TransformGestureEvent> = new Signal1<TransformGestureEvent>( );
+	#end
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -44,30 +48,30 @@ import org.shoebox.utils.system.Signal1;
 	#end
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		private function new() {
 			super( );
 			_init( );
 		}
-	
+
 	// -------o public
-			
+
 		/**
 		* Adding a new listener for the <code>GestureType</code> gesture
-		* 
+		*
 		* @public
 		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
 		*/
 		public function add( type : GestureTypes ) : AGesture {
-			
-			var gesture : AGesture = null;	
+
+			var gesture : AGesture = null;
 
 			//
 				var value : Int;
@@ -83,7 +87,7 @@ import org.shoebox.utils.system.Signal1;
 
 			//
 				if( !_hGestures.exists( value ) ){
-					
+
 					switch( type ){
 
 						case TAP( fingers_count , taps_count ):
@@ -110,15 +114,15 @@ import org.shoebox.utils.system.Signal1;
 					_hGestures.set( value , gesture );
 				}else
 					gesture = _hGestures.get( value );
-			
+
 			return gesture;
 		}
 
 	// -------o protected
-		
+
 		/**
 		* Initialization
-		* 
+		*
 		* @private
 		* @return	void
 		*/
@@ -138,20 +142,20 @@ import org.shoebox.utils.system.Signal1;
 
 		/**
 		* When the stage is deactivate == Activity deactived
-		* 
+		*
 		* @private
 		* @return	void
 		*/
 		private function _onDeactivate( _ ) : Void{
 			trace('_onDeactivate');
-			
+
 			//
 				if( _timer != null )
 					_timer.stop( );
 
 			//Instance of the HyperTouch java class
 				if( _java_instance == null )
-					_java_instance = getJNIInstance( );				
+					_java_instance = getJNIInstance( );
 
 			//Calling the disable function
 				disable( _java_instance );
@@ -161,13 +165,13 @@ import org.shoebox.utils.system.Signal1;
 		/**
 		* Reactivation of the stage == Android listener reactivation
 		* A timer is used to give some time to the activity to reenable everything
-		* 
+		*
 		* @private
 		* @return	void
 		*/
 		private function _onActivate( _ ) : Void{
 			trace('_onActivate');
-			
+
 			//Waiting for the GLSurfaceView reinitialization
 			//TODO : Temporary work around
 				_timer = Timer.delay( function( ){
@@ -180,27 +184,27 @@ import org.shoebox.utils.system.Signal1;
 
 		/**
 		* Add a tap listener with the specified fingers count & taps count
-		* 
+		*
 		* @private
 		* @param 	fingers_count: Finger count ( Int )
 		* @param 	taps_count   : Taps count ( Int )
 		* @return	void
 		*/
 		private function _add_tap_with( fingers_count : Int , taps_count : Int = 1 ) : AGesture{
-			
+
 			var value = _get_tap_code( fingers_count , taps_count );
 			var res : GestureTap = null;
 			if( !_hGestures.exists( value ) ){
 				res = new GestureTap( fingers_count , taps_count );
 				res.enabled = true;
 				_hGestures.set( value , res );
-			}			
+			}
 			return res;
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -214,25 +218,25 @@ import org.shoebox.utils.system.Signal1;
 		#if ios
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@CPP("hypertouch")
 		public function HyperTouch_init( ) : Void {
-						
+
 		}
-		
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@CPP("hypertouch")
 		static public function HyperTouch_activate( iCode : Int , iFingers : Int = 0 ) : Void {
-						
+
 		}
 
 		#end
@@ -242,8 +246,8 @@ import org.shoebox.utils.system.Signal1;
 		#if android
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -253,34 +257,34 @@ import org.shoebox.utils.system.Signal1;
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@JNI
 		public function disable( java_instance : Dynamic ) : Void {
-						
+
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@JNI("fr.hyperfiction.hypertouch.HyperTouch","getInstance")
 		static public function getJNIInstance( ) : HyperTouch {
-						
+
 		}
 
 		#end
 
 	// -------o misc
-		
+
 		/**
 		* Static method to listen a new <code>GestureType</code>
-		* 
+		*
 		* @public
 		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
@@ -291,18 +295,18 @@ import org.shoebox.utils.system.Signal1;
 
 		/**
 		* Singleton of the class
-		* 
+		*
 		* @public
 		* @return	singleton instance of the class
 		*/
 		static public function getInstance( ) : HyperTouch {
-			
+
 			if( __instance == null )
 				__instance = new HyperTouch( );
 
 			return __instance;
 
-		}	
+		}
 
 		private static var __instance : HyperTouch = null;
 }

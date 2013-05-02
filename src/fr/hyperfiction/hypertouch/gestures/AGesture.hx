@@ -18,10 +18,10 @@ import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
  */
 
 class AGesture{
-		
+
+	public var prio	: Float;
 	public var phase	: GesturePhases;
 	public var enabled	( default , _set_enabled ) : Bool;
-	public var prio		: Float;
 
 	private var _pt : Point;
 
@@ -30,23 +30,23 @@ class AGesture{
 	#end
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public function new() {
 			_pt = new Point( );
 			prio = 0.0;
 		}
-	
+
 	// -------o public
-				
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -55,31 +55,32 @@ class AGesture{
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		public function stage_emit( event : Event ) : Void {
-			
+
 			#if android
-			//nme.Lib.postUICallback( function( ){	
-			//trace("postUICallback");			
-			#end				
-			
+			//nme.Lib.postUICallback( function( ){
+			//trace("postUICallback");
+			#end
+
 			//emit( event );
 
 			#if android
 			//});
 			#end
 
+			nme.Lib.current.stage.dispatchEvent( event );
 		}
 
 	// -------o protected
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -91,11 +92,11 @@ class AGesture{
 				_deactivate( );
 
 			return this.enabled = b;
-		}	
+		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -104,8 +105,8 @@ class AGesture{
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -114,8 +115,8 @@ class AGesture{
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -137,9 +138,9 @@ class AGesture{
 			return res;
 		}
 
-	
-		
+
+
 
 	// -------o misc
-	
+
 }
