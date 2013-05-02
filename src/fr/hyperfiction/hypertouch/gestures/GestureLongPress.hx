@@ -57,7 +57,8 @@ import fr.hyperfiction.hypertouch.gestures.AGesture;
 								fSizeY    : Float   
 								) : Void{
 			var ev = new GestureLongPressEvent( GestureLongPressEvent.LONG_PRESS , iPhase , iPointerId , fx , fy , fPressure , fSizeX , fSizeY );
-			emit( ev , fx , fy );
+			stage_emit( ev );
+			//emit( ev , fx , fy );
 		}
 
 		/**

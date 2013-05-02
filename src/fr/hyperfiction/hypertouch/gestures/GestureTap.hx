@@ -98,7 +98,7 @@ import nme.Lib;
 			#if ios
 			ev = new GestureTapEvent( sType , a[ 2 ] , 0 , a[ 3 ] , a[ 4 ] );
 			#end
-			emit( ev , ev.stageX , ev.stageY );
+			stage_emit( ev );
 		}
 
 		/**

@@ -266,6 +266,7 @@ extern "C"{
     	val_array_set_i( args , 3 , alloc_float( dx ) );
     	val_array_set_i( args , 4 , alloc_float( dy ) );
       	val_call1( eval_callback_swipe -> get( ) , args ); 
+      	
     }
 
     JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GesturePinch_onPinch(

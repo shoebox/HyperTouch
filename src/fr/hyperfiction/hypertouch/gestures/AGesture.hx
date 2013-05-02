@@ -7,16 +7,21 @@ import nme.display.InteractiveObject;
 import nme.events.Event;
 import nme.geom.Point;
 
+#if noevents
+import fr.hyperfiction.hypertouch.HyperTouch;
+import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
+#end
+
 /**
  * ...
  * @author shoe[box]
  */
 
 class AGesture{
-	
-	public var phase : GesturePhases;
-	public var enabled( default , _set_enabled ) : Bool;
-	public var prio : Float;
+		
+	public var phase	: GesturePhases;
+	public var enabled	( default , _set_enabled ) : Bool;
+	public var prio		: Float;
 
 	private var _pt : Point;
 
@@ -46,18 +51,6 @@ class AGesture{
 		* @return	void
 		*/
 		public function emit( gesture : Event , fx : Float , fy : Float ) : Void {
-			
-			_pt.x = fx;
-			_pt.y = fy;
-			var under = Lib.current.stage.getObjectsUnderPoint( _pt );
-			for( child in under ){
-
-				if( child.hasEventListener( gesture.type ) && child.hitTestPoint( fx , fy ) ){
-					child.dispatchEvent( gesture );
-					return;
-				}
-			}
-
 			stage_emit( gesture );
 		}
 
@@ -67,8 +60,19 @@ class AGesture{
 		* @public
 		* @return	void
 		*/
-		public function stage_emit( gesture : Event ) : Void {
-			Lib.current.stage.dispatchEvent( gesture );						
+		public function stage_emit( event : Event ) : Void {
+			
+			#if android
+			//nme.Lib.postUICallback( function( ){	
+			//trace("postUICallback");			
+			#end				
+			
+			//emit( event );
+
+			#if android
+			//});
+			#end
+
 		}
 
 	// -------o protected

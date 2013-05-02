@@ -10,29 +10,29 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
  * ...
  * @author shoe[box]
  */
-@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePan extends AGesture{	
+@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePan extends AGesture{
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public function new() {
 			super( );
 		}
-	
-	// -------o public
-				
-				
 
-	// -------o protected	
+	// -------o public
+
+
+
+	// -------o protected
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -40,7 +40,7 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
 			#if android
 			_java_instance = getInstance( );
-			#end	
+			#end
 
 			#if cpp
 			set_callback_pan( _onPan );
@@ -53,21 +53,21 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
 		private function _onPan( a : Array<Dynamic> ) : Void{
 			var ev = new TransformGestureEvent( GESTURE_PAN , a[1] , a[2] , 1.0 , 1.0 , 1.0 );
 				ev.phase = _translate_phase( a[ 0 ] );
-			
+
 			#if android
 				ev.pressure = a[5];
 			#end
 
 			stage_emit( ev );
-	
+
 		}
 
 	// -------o misc
@@ -77,31 +77,31 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		#if android
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@JNI
-		public function getInstance( ) : GesturePan{
-			
+		static public function getInstance( ) : GesturePan{
+
 		}
 
 		#end
 
 	// -------o CPP
-		
+
 		#if cpp
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@CPP("hypertouch")
 		public function set_callback_pan( f : Array<Dynamic>->Void ) : Void {
-						
+
 		}
 
 		#end

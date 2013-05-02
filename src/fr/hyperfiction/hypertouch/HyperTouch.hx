@@ -2,6 +2,7 @@ package fr.hyperfiction.hypertouch;
 
 import fr.hyperfiction.hypertouch.enums.GestureTypes;
 import fr.hyperfiction.hypertouch.enums.SwipeDirections;
+import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.gestures.GestureLongPress;
 import fr.hyperfiction.hypertouch.gestures.GesturePan;
@@ -9,6 +10,8 @@ import fr.hyperfiction.hypertouch.gestures.GesturePinch;
 import fr.hyperfiction.hypertouch.gestures.GestureRotation;
 import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
+
+import nme.events.EventDispatcher;
 
 #if android
 import haxe.Timer;
@@ -21,12 +24,16 @@ import cpp.Lib;
 import nme.Lib;
 #end
 
+import org.shoebox.utils.system.Signal1;
+
 /**
  * ...
  * @author shoe[box]
  */
 
-@:build(org.shoebox.utils.NativeMirror.build( )) class HyperTouch{
+@:build(org.shoebox.utils.NativeMirror.build( )) class HyperTouch extends EventDispatcher{
+
+	static public var onTransformGesture : Signal1<TransformGestureEvent> = new Signal1<TransformGestureEvent>( );
 
 	private var _hGestures : IntHash<AGesture>;
 
@@ -45,7 +52,7 @@ import nme.Lib;
 		* @return	void
 		*/
 		private function new() {
-			trace('constructor');
+			super( );
 			_init( );
 		}
 	
@@ -101,8 +108,9 @@ import nme.Lib;
 
 					gesture.enabled = true;
 					_hGestures.set( value , gesture );
-				}
-
+				}else
+					gesture = _hGestures.get( value );
+			
 			return gesture;
 		}
 
@@ -277,8 +285,8 @@ import nme.Lib;
 		* @param 	gesture : Gesture to listen for ( GestureType )
 		* @return	void
 		*/
-		static public function add_listener_for( gesture : GestureTypes ) : Void {
-			getInstance( ).add( gesture );
+		static public function addGesture( gesture : GestureTypes ) : AGesture {
+			return getInstance( ).add( gesture );
 		}
 
 		/**

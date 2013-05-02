@@ -6,6 +6,7 @@ import fr.hyperfiction.hypertouch.enums.SwipeDirections;
 import fr.hyperfiction.hypertouch.gestures.AGesture;
 import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
+
 /**
  * ...
  * @author shoe[box]
@@ -37,8 +38,8 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		* @return	void
 		*/
 		override private function _activate( ) : Void{
-
-			#if cpp
+			trace("_activate");
+			#if ( android || ios )
 			set_callback_swipe( _onSwipe );
 			#end
 
@@ -60,13 +61,12 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		* @return	void
 		*/
 		private function _onSwipe( a : Array<Dynamic> ) : Void{
-			
+			//trace('onSwipe: :: +'+a);
 			var ev : TransformGestureEvent = null;
 
 			#if android
 				ev = new TransformGestureEvent( GESTURE_SWIPE , 0 , 0 );
 				ev.direction = _get_swipe_direction( a[ 0 ] );
-				ev.pressure = a[5];
 			#end
 
 			#if ios
@@ -76,8 +76,9 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 			
 			//
 				ev.phase = ALL;
-			
-			emit( ev , 0.0 , 0.0 );
+				//onSwipe.emit( ev );
+				HyperTouch.onTransformGesture.emit( ev );
+			//stage_emit( ev );
 		}
 
 		/**

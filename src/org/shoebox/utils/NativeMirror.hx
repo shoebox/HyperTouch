@@ -34,8 +34,7 @@ class NativeMirror{
 		* @return	void
 		*/
 		static public function build( ) : Array<Field> {
-			//trace('build');		
-
+			
 			//
 				var aPackage   = haxe.macro.Context.getLocalClass( ).get( ).pack;
 				var fields     = haxe.macro.Context.getBuildFields( );
@@ -148,7 +147,10 @@ class NativeMirror{
 														bStatic          : Bool 
 													) : Expr{
 			
-			//trace('_build_func ::: '+field_name+' - '+bCPP);
+			#if verbose
+			Sys.println("[NativeMirror] on "+sFull_class_name+" - Method : "+field_name);
+			#end
+
 			var b = false;
 			var field = rv( field_name );
 			var sMethod_name : String = Std.string( sMethodName );
@@ -207,24 +209,15 @@ class NativeMirror{
 				}
 				sJNI_signature += ')'+_jni_translate_type( _get_package_return_type( f.ret ) );
 
-				if( bJNI ){
-					/*
-					trace( 'JNI Method ------------------------------------------');
-					trace( '\tON CLASS \t: '+sFull_class_name);
-					trace( '\tMethod \t: '+sMethodName);
-					trace( '\tSignature \t: '+ sJNI_signature );
-					*/
-					#if android
-					trace(Std.format( '[JNI] Lib : $sFull_class_name \t Method : $sMethodName \t sign : $sJNI_signature' ) );
-					#end
-					//trace('sJNI_class_name ::: '+sJNI_class_name);
-				}
+				if( bJNI )
+					Sys.println("[NativeMirror] JNI Class : "+sFull_class_name+" | Method : "+sMethodName+" | Signature : "+sJNI_signature);
+
 				sJNI_class_name = sFull_class_name.split('.').join('/');						
 
 			//CPP
-				if( bCPP ){
-					//trace(Std.format( '[CPP] Lib : $sFull_class_name \t Method : $sMethodName' ) );
-				}
+				if( bCPP )
+					Sys.println("[NativeMirror] CPP Class : "+sFull_class_name+" | Method : "+sMethodName);
+				
 				
 			//Return Expr
 				
@@ -310,50 +303,52 @@ class NativeMirror{
 
 					//For CPP		
 						if( $(bCPP) ){
-							 trace('[CPP] ------------------------------------------------');
-							 trace('\tLIBRARY 		: '+$(sFull_class_name));
-							 trace('\tMETHOD 		: '+$(sMethod_name));
+							 Sys.println('[CPP] ------------------------------------------------');
+							 Sys.println('\tLIBRARY 		: '+$(sFull_class_name));
+							 Sys.println('\tMETHOD 		: '+$(sMethod_name));
 							if( $field == null ){
-								 trace('CPP Method not yet created, lets create it...');
+								#if verbose
+								Sys.println('CPP Method not yet created, lets create it...');
+								#end
 								$field = cpp.Lib.load( $(sFull_class_name) , $(sMethod_name) , $(count) );
 							}else{
-								trace('>> CPP Method already created');
+								#if verbose
+								Sys.println('>> CPP Method already created');
+								#end
 							}
 
 							if( $field == null )
-									throw new nme.errors.Error("Method creation failed");
+								throw new nme.errors.Error("Method creation failed");
 
 							//res = Reflect.callMethod( null , $field , aArgs );							
 						}
 					
 					//For JNI 
-						#if android
+						
 						if( $(bJNI) ){
-
-							// trace('[JNI] ------------------------------------------------');
-							// trace('\tON CLASS 		: '+$(sJNI_class_name));
-							// trace('\tMETHOD   		: '+$(sMethodName));
-							// trace('\tSIGNATURE  	: '+$(sJNI_signature));
-							
+							#if android
 							if( $field == null ){
-								// trace('JNI Method not yet created, lets create it...');
-								if( $(bStatic) ){
-									// trace('>> Create Static method');
+								if( $(bStatic) )
 									$field = nme.JNI.createStaticMethod( $(sJNI_class_name) , $(sMethodName) , $(sJNI_signature) );
-								}else{
-									// trace('>> Create Member method');
+								else
 									$field = nme.JNI.createMemberMethod( $(sJNI_class_name) , $(sMethodName) , $(sJNI_signature) );
-								}	
-
+							
 								if( $field == null )
 									throw new nme.errors.Error("Error creation failed");
 
+								#if verbose
+								Sys.println('>> JNI Method created');
+								#end
+
 							}else{
-								// trace('>> JNI Method already created');
+								#if verbose
+								Sys.println('>> JNI Method already created');
+								#end
 							}
+							#end
 							//res = Reflect.callMethod( null , $field , aArgs );
 						}
-						#end
+						
 
 					//
 						if( $field != null ){

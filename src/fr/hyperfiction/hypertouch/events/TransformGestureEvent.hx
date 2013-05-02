@@ -64,6 +64,16 @@ class TransformGestureEvent extends Event{
 	
 	// -------o public				
 
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		override public function clone( ) : TransformGestureEvent {
+			return new TransformGestureEvent( gesture_type , offsetX , offsetY , scaleX , scaleY , rotation , velocityX , velocityY );
+		}
+
 	// -------o protected		
 
 	// -------o misc

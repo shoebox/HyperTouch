@@ -16,7 +16,7 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 
 class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
 
-	private static String TAG = "HyperTouch :: GestureSwipe";
+	private static String TAG = "trace";//HyperTouch :: GestureSwipe";
 
 	private GestureDetector _gesture_detector;
 	private MotionEvent mLastOnDownEvent = null;
@@ -155,9 +155,11 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		*/
 		private void _swipe( final int dir , final float vx , final float vy , final float dx , final float dy ){
 			
+			//HyperTouch.mSurface.queueEvent(
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
 	                public void run() { 
+	                	trace("run");
 						onSwipe( dir , vx , vy , dx , dy );
 					}
 				}
@@ -183,7 +185,12 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		* @return	void
 		*/
 		public static GestureSwipe getInstance( ){	
-			return new GestureSwipe( );
+			if( __instance == null )
+				__instance = new GestureSwipe( );
+
+			return __instance;
 		}
 
+		static private GestureSwipe __instance;
+	
 }
