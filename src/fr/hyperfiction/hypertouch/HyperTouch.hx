@@ -32,8 +32,8 @@ import org.shoebox.utils.system.Signal1;
  * ...
  * @author shoe[box]
  */
-
-@:build(org.shoebox.utils.NativeMirror.build( )) class HyperTouch extends EventDispatcher{
+@:build( ShortCuts.mirrors( ) )
+class HyperTouch extends EventDispatcher{
 
 	#if signal
 	static public var onTransformGesture : Signal1<TransformGestureEvent> = new Signal1<TransformGestureEvent>( );

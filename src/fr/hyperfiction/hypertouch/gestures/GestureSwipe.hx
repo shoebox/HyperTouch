@@ -14,26 +14,26 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 @:build(org.shoebox.utils.NativeMirror.build( )) class GestureSwipe extends AGesture{
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public function new() {
 			super( );
 		}
-	
+
 	// -------o public
-				
-				
+
+
 
 	// -------o protected
-	
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -46,17 +46,17 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 			#if android
 			_java_instance = getInstance( );
 			trace("_java_instance ;;; "+_java_instance);
-			#end				
+			#end
 
 			#if ios
 			HyperTouch.HyperTouch_activate( 6 , 1 );
 			#end
-			
+
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -73,17 +73,17 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 				ev = new TransformGestureEvent( GESTURE_SWIPE , a[3] , a[4] );
 				ev.direction = _get_swipe_direction( a[ 0 ] );
 			#end
-			
+
 			//
 				ev.phase = ALL;
 				//onSwipe.emit( ev );
-				HyperTouch.onTransformGesture.emit( ev );
-			//stage_emit( ev );
+				//HyperTouch.onTransformGesture.emit( ev );
+			stage_emit( ev );
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -111,20 +111,20 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		}
 
 	// -------o misc
-		
+
 	// -------o JNI
 
 		#if android
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@JNI
 		static public function getInstance( ) : GestureSwipe {
-						
+
 		}
 
 		#end
@@ -134,14 +134,14 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		#if cpp
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@CPP("hypertouch")
 		public function set_callback_swipe( f : Array<Dynamic>->Void ) : Void {
-						
+
 		}
 
 		#end
