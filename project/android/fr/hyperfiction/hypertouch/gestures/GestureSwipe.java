@@ -34,23 +34,23 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		final static int SWIPE_DIRECTION_UP    = 4;
 		final static int SWIPE_DIRECTION_DOWN  = 8;
 
-	static public native void onSwipe( 
-											int dir , 
-											float vx , 
-											float vy , 
-											float dx , 
+	static public native void onSwipe(
+											int dir ,
+											float vx ,
+											float vy ,
+											float dx ,
 											float dy
 										);
 	static {
-		System.loadLibrary( "hypertouch" ); 
+		System.loadLibrary( "hypertouch" );
 	}
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public GestureSwipe( ){
@@ -65,12 +65,12 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 						});
 
 		}
-	
+
 	// -------o public
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -85,8 +85,8 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -98,14 +98,14 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
         }
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float vx , float vy) {  
-			
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float vx , float vy) {
+
 			 if( e1==null )
                 e1 = mLastOnDownEvent;
 
@@ -115,50 +115,50 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
             float dx = e2.getX() - e1.getX();
             float dy = e1.getY() - e2.getY();
 
-            if ( 
+            if (
             		Math.abs( dy ) < SWIPE_MAX_OFF_PATH &&
                 	Math.abs( vx ) >= SWIPE_THRESHOLD_VELOCITY &&
-                	Math.abs( dx ) >= SWIPE_MIN_DISTANCE 
+                	Math.abs( dx ) >= SWIPE_MIN_DISTANCE
                 ) {
 
-                if ( dx > 0 ) 
+                if ( dx > 0 )
                   	_swipe( SWIPE_DIRECTION_RIGHT , vx , vy , dx , dy );
                 else
                   	_swipe( SWIPE_DIRECTION_LEFT , vx , vy , dx , dy );
-                
+
                 return true;
 
             } else if (
             			Math.abs( dx ) < SWIPE_MAX_OFF_PATH &&
                 		Math.abs( vy ) >= SWIPE_THRESHOLD_VELOCITY &&
-                		Math.abs( dy ) >= SWIPE_MIN_DISTANCE 
+                		Math.abs( dy ) >= SWIPE_MIN_DISTANCE
                 	) {
 
-                if ( dy > 0 ) 
+                if ( dy > 0 )
                   	_swipe( SWIPE_DIRECTION_UP , vx , vy , dx , dy );
                 else
                   	_swipe( SWIPE_DIRECTION_DOWN , vx , vy , dx , dy );
-                
+
                 return true;
             }
             return false;
-		
+
 		}
-		
+
 	// -------o protected
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
 		private void _swipe( final int dir , final float vx , final float vy , final float dx , final float dy ){
-			
+			trace( "_swipe dir : "+dir+" | vx : "+vx+" vy : "+vy+" | dx : "+dx+" dy : "+dy);
 			//HyperTouch.mSurface.queueEvent(
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
-	                public void run() { 
+	                public void run() {
 	                	trace("run");
 						onSwipe( dir , vx , vy , dx , dy );
 					}
@@ -167,10 +167,10 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		}
 
 	// -------o misc
-		
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -179,12 +179,12 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
-		public static GestureSwipe getInstance( ){	
+		public static GestureSwipe getInstance( ){
 			if( __instance == null )
 				__instance = new GestureSwipe( );
 
@@ -192,5 +192,5 @@ class GestureSwipe extends GestureDetector.SimpleOnGestureListener implements Vi
 		}
 
 		static private GestureSwipe __instance;
-	
+
 }

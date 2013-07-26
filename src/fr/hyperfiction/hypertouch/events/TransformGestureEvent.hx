@@ -4,7 +4,7 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 import fr.hyperfiction.hypertouch.enums.GesturePhases;
 import fr.hyperfiction.hypertouch.enums.GestureTypes;
 import fr.hyperfiction.hypertouch.enums.SwipeDirections;
-import nme.events.Event;
+import flash.events.Event;
 
 /**
  * ...
@@ -13,14 +13,14 @@ import nme.events.Event;
 
 class TransformGestureEvent extends Event{
 
-	public var offsetX     : Float;
-	public var offsetY     : Float;
-	public var rotation    : Float;
-	public var scaleX      : Float;
-	public var scaleY      : Float;
-	public var gesture_type : GestureTypes;
-	public var velocityX   : Float;
-	public var velocityY   : Float;
+	public var gesture_type	: GestureTypes;
+	public var offsetX		: Float;
+	public var offsetY		: Float;
+	public var rotation		: Float;
+	public var scaleX		: Float;
+	public var scaleY		: Float;
+	public var velocityX	: Float;
+	public var velocityY	: Float;
 	#if android
 	public var pressure : Float;
 	#end
@@ -34,18 +34,18 @@ class TransformGestureEvent extends Event{
 	public static inline var GESTURE_SWIPE	: String = 'GESTURE_SWIPE';
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
-		public function new( 
-								gesture_type : GestureTypes , 
-								offsetX      : Float = 0.0 , 
+		public function new(
+								gesture_type : GestureTypes ,
+								offsetX      : Float = 0.0 ,
 								offsetY      : Float = 0.0 ,
-								scaleX       : Float = 0.0 , 
+								scaleX       : Float = 0.0 ,
 								scaleY       : Float = 0.0 ,
 								rotation     : Float = 0.0 ,
 								velocityX    : Float = 0.0,
@@ -61,12 +61,12 @@ class TransformGestureEvent extends Event{
 			this.velocityX    = velocityX;
 			this.velocityY    = velocityY;
 		}
-	
-	// -------o public				
+
+	// -------o public
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -74,8 +74,8 @@ class TransformGestureEvent extends Event{
 			return new TransformGestureEvent( gesture_type , offsetX , offsetY , scaleX , scaleY , rotation , velocityX , velocityY );
 		}
 
-	// -------o protected		
+	// -------o protected
 
 	// -------o misc
-		
+
 }

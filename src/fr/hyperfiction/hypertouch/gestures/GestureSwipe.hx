@@ -11,7 +11,8 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
  * ...
  * @author shoe[box]
  */
-@:build(org.shoebox.utils.NativeMirror.build( )) class GestureSwipe extends AGesture{
+@:build( ShortCuts.mirrors( ) )
+class GestureSwipe extends AGesture{
 
 	// -------o constructor
 
@@ -61,11 +62,16 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		* @return	void
 		*/
 		private function _onSwipe( a : Array<Dynamic> ) : Void{
-			//trace('onSwipe: :: +'+a);
+			trace('onSwipe: :: +'+a);
 			var ev : TransformGestureEvent = null;
 
 			#if android
+				trace( a );
 				ev = new TransformGestureEvent( GESTURE_SWIPE , 0 , 0 );
+				ev.velocityX = a[ 1 ];
+				ev.velocityY = a[ 2 ];
+				trace( "vx ::: "+ev.velocityX );
+				trace( "vy ::: "+ev.velocityY );
 				ev.direction = _get_swipe_direction( a[ 0 ] );
 			#end
 

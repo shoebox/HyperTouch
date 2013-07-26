@@ -2,10 +2,10 @@ package fr.hyperfiction.hypertouch.gestures;
 
 import fr.hyperfiction.hypertouch.enums.GesturePhases;
 
-import nme.Lib;
-import nme.display.InteractiveObject;
-import nme.events.Event;
-import nme.geom.Point;
+import flash.Lib;
+import flash.display.InteractiveObject;
+import flash.events.Event;
+import flash.geom.Point;
 
 #if noevents
 import fr.hyperfiction.hypertouch.HyperTouch;
@@ -21,7 +21,7 @@ class AGesture{
 
 	public var prio	: Float;
 	public var phase	: GesturePhases;
-	public var enabled	( default , _set_enabled ) : Bool;
+	public var enabled	( default , set ) : Bool;
 
 	private var _pt : Point;
 
@@ -63,7 +63,7 @@ class AGesture{
 		public function stage_emit( event : Event ) : Void {
 
 			#if android
-			//nme.Lib.postUICallback( function( ){
+			//flash.Lib.postUICallback( function( ){
 			//trace("postUICallback");
 			#end
 
@@ -73,7 +73,7 @@ class AGesture{
 			//});
 			#end
 
-			nme.Lib.current.stage.dispatchEvent( event );
+			flash.Lib.current.stage.dispatchEvent( event );
 		}
 
 	// -------o protected
@@ -84,7 +84,7 @@ class AGesture{
 		* @private
 		* @return	void
 		*/
-		private function _set_enabled( b : Bool ) : Bool{
+		private function set_enabled( b : Bool ) : Bool{
 
 			if( b )
 				_activate( );

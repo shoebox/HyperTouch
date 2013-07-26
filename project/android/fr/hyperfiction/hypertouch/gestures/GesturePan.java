@@ -18,7 +18,7 @@ import org.haxe.nme.GameActivity;
 class GesturePan extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
 
 	private static String TAG = "HyperTouch :: GesturePan";
-	
+
 	private Boolean _bScrolling;
 	private Boolean _recycleVelocityTracker;
 	private GestureDetector _gesture_detector;
@@ -28,7 +28,7 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 	private float _fx;
 	private float _fy;
 
-	static public native void onPan( 
+	static public native void onPan(
 										int iPhase,
 										float fx,
 										float fy,
@@ -37,15 +37,15 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 										float pressure
 									);
 	static {
-		System.loadLibrary( "hypertouch" ); 
+		System.loadLibrary( "hypertouch" );
 	}
-	
+
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public GesturePan( ){
@@ -61,20 +61,20 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 							}
 						});
 		}
-	
+
 	// -------o public
-		
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@Override
 		public boolean onTouch( View v , MotionEvent ev ) {
 			_gesture_detector.onTouchEvent( ev );
-		
-			int i = 0;			
+
+			int i = 0;
 			int action = ev.getAction();
 			 switch(action) {
 	            case MotionEvent.ACTION_DOWN:
@@ -93,7 +93,7 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 	            	if(mVelocityTracker == null)
 	                    mVelocityTracker = VelocityTracker.obtain();
 	               		mVelocityTracker.addMovement( ev );
-	                	mVelocityTracker.computeCurrentVelocity( 1000 );	               
+	                	mVelocityTracker.computeCurrentVelocity( 1000 );
 	                break;
 
 	            case MotionEvent.ACTION_UP:
@@ -117,21 +117,21 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {  
-			_emitScroll( 
+		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+			_emitScroll(
 							1,
 							e2.getX( ) - _fx,
 							e2.getY( ) - _fy,
 							mVelocityTracker.getXVelocity( ),
 							mVelocityTracker.getYVelocity( ),
 							e2.getPressure( )
-						);	
+						);
 			_fx = e2.getX( );
 			_fy = e2.getY( );
 			return false;
@@ -140,8 +140,8 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 	// -------o protected
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -149,7 +149,7 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 			_bScrolling = true;
 			_fx = ev.getX( );
 			_fy = ev.getY( );
-			_emitScroll( 
+			_emitScroll(
 							0,
 							0,
 							0,
@@ -160,14 +160,14 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
 		private void _endScroll( MotionEvent ev ){
 			_bScrolling = false;
-			_emitScroll( 
+			_emitScroll(
 							2,
 							ev.getX( ) - _fx,
 							ev.getY( ) - _fy,
@@ -181,12 +181,12 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
-		private void _emitScroll( 
+		private void _emitScroll(
 									final int iPhase,
 									final float fx,
 									final float fy,
@@ -194,22 +194,22 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 									final float vy,
 									final float pressure
 								){
-			
+
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
-	                public void run() { 
-	                	trace("emit::: "+fx+" === "+fy+" == "+vx+" === "+vy);
+	                public void run() {
+	                	//trace("emit::: "+fx+" === "+fy+" == "+vx+" === "+vy);
 						onPan( iPhase , fx , fy , vx , vy , pressure );
 					}
 				});
-			
+
 		}
 
 	// -------o misc
-		
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -218,12 +218,12 @@ class GesturePan extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
-		public static GesturePan getInstance( ){	
+		public static GesturePan getInstance( ){
 			GesturePan 	res = new GesturePan( );
 			return res;
 		}

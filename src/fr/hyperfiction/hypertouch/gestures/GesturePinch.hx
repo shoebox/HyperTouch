@@ -8,30 +8,31 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
  * ...
  * @author shoe[box]
  */
-@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePinch extends AGesture{
+@:build( ShortCuts.mirrors( ) )
+class GesturePinch extends AGesture{
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public function new() {
 			super( );
 
 		}
-	
+
 	// -------o public
-				
-				
+
+
 
 	// -------o protected
-	
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
@@ -43,7 +44,7 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 
 			#if android
 			_java_instance = getInstance( );
-			#end	
+			#end
 
 			#if ios
 			HyperTouch.HyperTouch_activate( 4 , 1 );
@@ -52,17 +53,17 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
 		private function _onPinch( a : Array<Dynamic> ) : Void{
-			
+
 			var ev : TransformGestureEvent = new TransformGestureEvent( GESTURE_PINCH , a[ 1 ] , a[ 2 ] , a[ 3 ] , a[ 3 ] );
 				ev.phase = _translate_phase( a[ 0 ] );
 			stage_emit( ev );
-			
+
 		}
 
 	// -------o misc
@@ -72,31 +73,31 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
 		#if android
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@JNI
 		static public function getInstance( ) : GesturePinch {
-						
+
 		}
 
 		#end
 
 	// -------o CPP
-		
+
 		#if cpp
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		@CPP("hypertouch")
 		public function set_callback_pinch( f : Array<Dynamic>->Void ) : Void {
-						
+
 		}
 
 		#end

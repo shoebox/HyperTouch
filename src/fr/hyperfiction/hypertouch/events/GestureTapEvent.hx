@@ -1,7 +1,7 @@
 package fr.hyperfiction.hypertouch.events;
 
 import fr.hyperfiction.hypertouch.enums.GesturePhases;
-import nme.events.Event;
+import flash.events.Event;
 
 /**
  * ...
@@ -9,10 +9,10 @@ import nme.events.Event;
  */
 
 class GestureTapEvent extends Event{
-	
+
 	public var fingersCount: Int;
 	public var iPhase      : Int;
-	public var iPointerId  : Int;	
+	public var iPointerId  : Int;
 	public var sizeX       : Float;
 	public var sizeY       : Float;
 	public var stageX      : Float;
@@ -24,22 +24,22 @@ class GestureTapEvent extends Event{
 	public static inline var TWO_FINGERS : String = 'GestureTapEvent_TWO_FINGERS';
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
-		public function new( 
+		public function new(
 								type      : String,
-								iPhase    : Int , 
-								iPointerId: Int , 
-								stageX    : Float , 
-								stageY    : Float , 
-								fPressure : Float = -1 , 
-								sizeX     : Float = -1 , 
-								sizeY     : Float = -1   
+								iPhase    : Int ,
+								iPointerId: Int ,
+								stageX    : Float ,
+								stageY    : Float ,
+								fPressure : Float = -1 ,
+								sizeX     : Float = -1 ,
+								sizeY     : Float = -1
 							 ) {
 			super( type );
 			this.iPhase     = iPhase;
@@ -50,23 +50,23 @@ class GestureTapEvent extends Event{
 			this.stageY     = stageY;
 			this.fPressure  = fPressure;
 		}
-	
+
 	// -------o public
-				
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		override public function clone( ) : Event {
 			return new GestureTapEvent( type , iPhase , iPointerId , sizeX , sizeY , stageX , stageY , fPressure );
-						
+
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -75,9 +75,9 @@ class GestureTapEvent extends Event{
 		}
 
 	// -------o protected
-	
-		
+
+
 
 	// -------o misc
-	
+
 }

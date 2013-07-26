@@ -11,17 +11,16 @@ import fr.hyperfiction.hypertouch.gestures.GestureRotation;
 import fr.hyperfiction.hypertouch.gestures.GestureSwipe;
 import fr.hyperfiction.hypertouch.gestures.GestureTap;
 
-import nme.events.EventDispatcher;
+import flash.events.EventDispatcher;
 
 #if android
 import haxe.Timer;
-import nme.events.Event;
-import nme.JNI;
+import flash.events.Event;
 #end
 
 #if cpp
 import cpp.Lib;
-import nme.Lib;
+import flash.Lib;
 #end
 
 #if signal
@@ -39,7 +38,7 @@ class HyperTouch extends EventDispatcher{
 	static public var onTransformGesture : Signal1<TransformGestureEvent> = new Signal1<TransformGestureEvent>( );
 	#end
 
-	private var _hGestures : IntHash<AGesture>;
+	private var _hGestures : Map<Int,AGesture>;
 
 	#if android
 	private var _java_instance	: Dynamic;
@@ -70,7 +69,7 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		public function add( type : GestureTypes ) : AGesture {
-
+			trace("add ::: "+type);
 			var gesture : AGesture = null;
 
 			//
@@ -127,10 +126,10 @@ class HyperTouch extends EventDispatcher{
 		* @return	void
 		*/
 		private function _init( ) : Void{
-			_hGestures = new IntHash<AGesture>( );
+			_hGestures = new Map<Int,AGesture>( );
 
 			#if android
-			nme.Lib.current.stage.addEventListener( Event.DEACTIVATE , _onDeactivate , false );
+			flash.Lib.current.stage.addEventListener( Event.DEACTIVATE , _onDeactivate , false );
 			#end
 
 			#if ios
@@ -159,7 +158,7 @@ class HyperTouch extends EventDispatcher{
 
 			//Calling the disable function
 				disable( _java_instance );
-				nme.Lib.current.stage.addEventListener( Event.ACTIVATE , _onActivate , false );
+				flash.Lib.current.stage.addEventListener( Event.ACTIVATE , _onActivate , false );
 		}
 
 		/**

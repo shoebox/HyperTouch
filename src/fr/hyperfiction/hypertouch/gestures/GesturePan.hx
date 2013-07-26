@@ -10,7 +10,8 @@ import fr.hyperfiction.hypertouch.events.TransformGestureEvent;
  * ...
  * @author shoe[box]
  */
-@:build(org.shoebox.utils.NativeMirror.build( )) class GesturePan extends AGesture{
+@:build( ShortCuts.mirrors( ) )
+class GesturePan extends AGesture{
 
 	// -------o constructor
 

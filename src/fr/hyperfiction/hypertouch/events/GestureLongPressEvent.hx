@@ -1,7 +1,7 @@
 package fr.hyperfiction.hypertouch.events;
 
 import fr.hyperfiction.hypertouch.enums.GesturePhases;
-import nme.events.Event;
+import flash.events.Event;
 
 /**
  * ...
@@ -9,9 +9,9 @@ import nme.events.Event;
  */
 
 class GestureLongPressEvent extends Event{
-	
+
 	public var iPhase      : Int;
-	public var iPointerId  : Int;	
+	public var iPointerId  : Int;
 	public var sizeX       : Float;
 	public var sizeY       : Float;
 	public var stageX      : Float;
@@ -19,24 +19,24 @@ class GestureLongPressEvent extends Event{
 	public var fPressure   : Float;
 
 	public static inline var LONG_PRESS : String = 'GestureLongPressEvent_LONG_PRESS';
-	
+
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
-		public function new( 
-								type      : String,
-								iPhase    : Int , 
-								iPointerId: Int , 
-								stageX    : Float , 
-								stageY    : Float , 
-								fPressure : Float , 
-								sizeX     : Float , 
-								sizeY     : Float   
+		public function new(
+								type       : String,
+								iPhase     : Int,
+								iPointerId : Int,
+								stageX     : Float,
+								stageY     : Float,
+								fPressure  : Float,
+								sizeX      : Float,
+								sizeY      : Float
 							 ) {
 			super( type );
 			this.iPhase     = iPhase;
@@ -47,23 +47,23 @@ class GestureLongPressEvent extends Event{
 			this.stageY     = stageY;
 			this.fPressure  = fPressure;
 		}
-	
+
 	// -------o public
-				
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
 		override public function clone( ) : Event {
 			return new GestureLongPressEvent( type , iPhase , iPointerId , sizeX , sizeY , stageX , stageY , fPressure );
-						
+
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -72,9 +72,9 @@ class GestureLongPressEvent extends Event{
 		}
 
 	// -------o protected
-	
-		
+
+
 
 	// -------o misc
-	
+
 }
