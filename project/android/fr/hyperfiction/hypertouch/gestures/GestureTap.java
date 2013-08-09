@@ -22,27 +22,27 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 	private int _fingers_count;
 	private int _taps_count;
 
-	static public native void onTap( 
+	static public native void onTap(
 										int iFingers,
 										int iTaps,
-										int iPhase , 
-										int iPointerId , 
-										float fx , 
-										float fy , 
-										float fPressure , 
-										float fSizeX , 
+										int iPhase ,
+										int iPointerId ,
+										float fx ,
+										float fy ,
+										float fPressure ,
+										float fSizeX ,
 										float fSizeY
 									);
 	static {
-		System.loadLibrary( "hypertouch" ); 
+		System.loadLibrary( "hypertouch" );
 	}
 
 	// -------o constructor
-		
+
 		/**
 		* constructor
 		*
-		* @param	
+		* @param
 		* @return	void
 		*/
 		public GestureTap( ){
@@ -56,12 +56,12 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 						});
 
 		}
-	
+
 	// -------o public
-				
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -72,8 +72,8 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -98,8 +98,8 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 	
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -113,8 +113,8 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -128,16 +128,16 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 	// -------o protected
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @private
 		* @return	void
 		*/
 		private void _emit( final int iFingers , final int iTaps , final MotionEvent e ){
-			trace("emit");
+			trace("emit ::: "+e.getAction( ));
 			HyperTouch.mSurface.queueEvent(
 				new Runnable(){
-	                public void run() { 
+	                public void run() {
 	                	onTap(
 								iFingers,
 								iTaps,
@@ -155,10 +155,10 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 	// -------o misc
-		
+
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
@@ -167,12 +167,12 @@ class GestureTap extends GestureDetector.SimpleOnGestureListener implements View
 		}
 
 		/**
-		* 
-		* 
+		*
+		*
 		* @public
 		* @return	void
 		*/
-		public static GestureTap getInstance( int fingers , int taps ){	
+		public static GestureTap getInstance( int fingers , int taps ){
 			GestureTap 	res = new GestureTap( );
 						res.set_fingers_count( fingers , taps );
 			return res;

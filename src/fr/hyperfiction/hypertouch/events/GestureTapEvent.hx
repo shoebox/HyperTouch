@@ -10,6 +10,7 @@ import flash.events.Event;
 
 class GestureTapEvent extends Event{
 
+	public var time : Int;
 	public var fingersCount: Int;
 	public var iPhase      : Int;
 	public var iPointerId  : Int;
@@ -42,6 +43,7 @@ class GestureTapEvent extends Event{
 								sizeY     : Float = -1
 							 ) {
 			super( type );
+			this.time = Std.int( Date.now( ).getTime( ) );
 			this.iPhase     = iPhase;
 			this.iPointerId = iPointerId;
 			this.sizeX      = sizeX;
